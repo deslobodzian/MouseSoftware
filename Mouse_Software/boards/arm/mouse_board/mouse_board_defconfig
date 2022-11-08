@@ -1,0 +1,44 @@
+# Copyright (c) 2022 Nordic Semiconductor ASA
+# SPDX-License-Identifier: Apache-2.0
+
+CONFIG_SOC_SERIES_NRF52X=y
+CONFIG_SOC_NRF52820_QDAA=y
+CONFIG_BOARD_MOUSE_BOARD=y
+
+# Enable MPU
+CONFIG_ARM_MPU=y
+
+# Enable hardware stack protection
+CONFIG_HW_STACK_PROTECTION=y
+
+# choose RTT console
+CONFIG_UART_CONSOLE=n
+CONFIG_USE_SEGGER_RTT=y
+CONFIG_CONSOLE=y
+CONFIG_RTT_CONSOLE=y
+
+# General config
+CONFIG_LOG=y
+CONFIG_LOG_DEFAULT_LEVEL=4
+
+# Use Internal RC Clock
+CONFIG_CLOCK_CONTROL_NRF_K32SRC_RC=y
+
+# Config GPIO
+CONFIG_GPIO=y
+
+# Config SPI Drivers
+CONFIG_SPI=y
+
+# Config PMW3360 sensor 
+CONFIG_SENSOR=y
+CONFIG_PMW3360=y
+
+# Congifure QDEC Driver
+CONFIG_QDEC_NRFX=y
+
+# additional board options
+CONFIG_GPIO_AS_PINRESET=y
+
+CONFIG_PINCTRL=y
+

@@ -1,0 +1,2 @@
+osource "c:/Users/deslo/Documents/Projects/Mouse_Software/boards/shields/*/Kconfig.defconfig"
+osource "C:/Programming/ncs/v2.0.2/nrf/boards/shields/*/Kconfig.defconfig"
