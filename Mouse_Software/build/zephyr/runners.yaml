@@ -12,7 +12,7 @@ debug-runner: jlink
 
 # Common runner configuration values.
 config:
-  board_dir: C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board
+  board_dir: C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board
   # Build outputs:
   elf_file: zephyr.elf
   hex_file: zephyr.hex

@@ -2,8 +2,8 @@
 
 LOG_MODULE_REGISTER(esb_transmitter, CONFIG_LOG_DEFAULT_LEVEL);
 
-void event_handler(struct esb_evt const *event) {
-    ready = true;
+void event_handler(ESB_Data *esb_data, struct esb_evt const *event) {
+    esb_data->ready = true;
 
     switch(event -> evt_id) {
         case ESB_EVENT_TX_SUCCESS:
@@ -13,7 +13,7 @@ void event_handler(struct esb_evt const *event) {
             LOG_DBG("TX FAILED EVENT");
             break;
         case ESB_EVENT_RX_RECEIVED:
-            while (esb_read_rx_payload(&rx_payload) == 0) {
+            while (esb_read_rx_payload(&esb_data->received_message) == 0) {
                 LOG_DBG("Packet received");
             }
     }
@@ -116,13 +116,13 @@ int init_transciever(void) {
     return 0;
 }
 
-int write_message(struct esb_payload payload) {
+int write_message(ESB_Data *esb_data) {
     int err;
-    payload.noack = false;
-    if (ready) {
-        ready = false;
+    esb_data->message.noack = false;
+    if (esb_data->ready) {
+        esb_data->ready = false;
         esb_flush_tx();
-        err = esb_write_payload(&payload);
+        err = esb_write_payload(&esb_data->message);
         
         if (err) {
             LOG_ERR("Failed to write, err: %d", err);

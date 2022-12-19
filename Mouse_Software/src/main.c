@@ -5,47 +5,43 @@
  */
 
 
-#include <zephyr.h>
-#include <device.h>
-#include <devicetree.h>
-#include <sys/printk.h>
-// #include "pmw3360.h"
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/logging/log.h>
+#include <zephyr/usb/usb_device.h>
+#include <zephyr/usb/class/usb_hid.h>
+
+#include "structs.h"
+
+#include "pmw3360.h"
 #include "buttons.h"
-// #include "transmitter.h"
-#include <drivers/gpio.h>
-#include <logging/log.h>
+#include "transmitter.h"
+#include <zephyr/drivers/gpio.h>
+#include <zephyr/logging/log.h>
+
+#include <zephyr/usb/usb_device.h>
+#include <zephyr/usb/class/usb_hid.h>
 
 LOG_MODULE_REGISTER(app, CONFIG_LOG_DEFAULT_LEVEL);
 
+K_SEM_DEFINE(sem, 0, 1);
+USB_Data usb;
+ESB_Data transmitter;
+MOUSE_Data mouse;
+PMW3360_Data pmw3360_struct;
+FSM_Data fsm;
+
+
 void main(void)
 {
-	const struct device *dev = get_pmw3360_device();
-	int button_vals[5];
-	init_buttons();
-
-
 	k_sleep(K_MSEC(1000));
-	init_pmw3360(dev);
-	int rc = 0;
+	fsm.state = INIT_MODE;
+	run_fsm(&fsm);
 	for (;;) {
-		fetch_pmw3360_data(dev);
-		// LOG_INF("CPI: %d", get_cpi(dev));
-		fetch_buttons(&button_vals);
-		// LOG_INF("Val: %d", val);
-		// LOG_INF("x: %03d; y: %03d\n", get_dx(dev), get_dy(dev));
-		LOG_INF("x: %03d; y: %03d; M1: %d, M2: %d, M3: %d, M4: %d, M5: %d\n",
-		 	get_dx(dev),
-			get_dy(dev),
-			button_vals[0],
-			button_vals[1],
-			button_vals[2],
-			button_vals[3],
-			button_vals[4]
-		);
-		// LOG_INF("CPI: %d", get_cpi(dev));
-		
-		// struct esb_payload test = ESB_CREATE_PAYLOAD(0, get_dx(dev), get_dy(dev));
-		// write_message(test);
-		k_sleep(K_MSEC(1000));
+		// k_sem_take(&sem, K_FOREVER);
+		// LOG_DBG("FSM state: ", fsm.state);
+		k_sleep(K_MSEC(1));
 	}
 }

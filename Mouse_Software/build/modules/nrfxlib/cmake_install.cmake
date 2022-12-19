@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Zephyr-Kernel")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files/Zephyr-Kernel")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,11 +39,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/Mouse_Software/build/modules/nrfxlib/nrfxlib/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/build/modules/nrfxlib/nrfxlib/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/Mouse_Software/build/modules/nrfxlib/nrf_802154/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/build/modules/nrfxlib/nrf_802154/cmake_install.cmake")
 endif()
 

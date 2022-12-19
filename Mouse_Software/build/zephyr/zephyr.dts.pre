@@ -1,7 +1,7 @@
 # 1 "C:/Programming/ncs/v2.0.2/zephyr/misc/empty_file.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
-# 1 "C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board.dts" 1
+# 1 "C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board.dts" 1
 
 
 
@@ -495,38 +495,16 @@
   compatible = "nordic,nRF52820-QDAA", "nordic,nRF52820", "nordic,nRF52", "simple-bus";
  };
 };
-# 6 "C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board.dts" 2
-# 1 "C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi" 1
+# 6 "C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board.dts" 2
+# 1 "C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi" 1
 
 
 
 
 
 &pinctrl {
-
- uart0_default: uart0_default {
-  group1 {
-   psels = <((((((0) * 32U) + (16)) & 0x3FU) << 0U) | ((0U & 0xFFFFU) << 16U))>,
-    <((((((0) * 32U) + (17)) & 0x3FU) << 0U) | ((2U & 0xFFFFU) << 16U))>;
-  };
-  group2 {
-   psels = <((((((0) * 32U) + (4)) & 0x3FU) << 0U) | ((1U & 0xFFFFU) << 16U))>,
-    <((((((0) * 32U) + (5)) & 0x3FU) << 0U) | ((3U & 0xFFFFU) << 16U))>;
-   bias-pull-up;
-  };
- };
-
- uart0_sleep: uart0_sleep {
-  group1 {
-   psels = <((((((0) * 32U) + (16)) & 0x3FU) << 0U) | ((0U & 0xFFFFU) << 16U))>,
-    <((((((0) * 32U) + (4)) & 0x3FU) << 0U) | ((1U & 0xFFFFU) << 16U))>,
-    <((((((0) * 32U) + (17)) & 0x3FU) << 0U) | ((2U & 0xFFFFU) << 16U))>,
-    <((((((0) * 32U) + (5)) & 0x3FU) << 0U) | ((3U & 0xFFFFU) << 16U))>;
-   low-power-enable;
-  };
- };
-
- spi0_default: spi0_default {
+# 30 "C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi"
+ spi0_default_alt: spi0_default_alt {
   group1 {
    psels = <((((((0) * 32U) + (7)) & 0x3FU) << 0U) | ((4U & 0xFFFFU) << 16U))>,
     <((((((0) * 32U) + (14)) & 0x3FU) << 0U) | ((6U & 0xFFFFU) << 16U))>,
@@ -534,7 +512,7 @@
   };
  };
 
- spi0_sleep: spi0_sleep {
+ spi0_sleep_alt: spi0_sleep_alt {
   group1 {
    psels = <((((((0) * 32U) + (7)) & 0x3FU) << 0U) | ((4U & 0xFFFFU) << 16U))>,
     <((((((0) * 32U) + (14)) & 0x3FU) << 0U) | ((6U & 0xFFFFU) << 16U))>,
@@ -542,6 +520,7 @@
    low-power-enable;
   };
  };
+
  qdec_default: qdec_default {
   group1 {
    psels = <((((((0) * 32U) + (0)) & 0x3FU) << 0U) | ((26U & 0xFFFFU) << 16U))>,
@@ -557,7 +536,7 @@
   };
  };
 };
-# 7 "C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board.dts" 2
+# 7 "C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board.dts" 2
 
 / {
  model = "mouse_board";
@@ -621,9 +600,8 @@
 &spi0 {
  compatible = "nordic,nrf-spim";
  status = "okay";
-
- pinctrl-0 = <&spi0_default>;
- pinctrl-1 = <&spi0_sleep>;
+ pinctrl-0 = <&spi0_default_alt>;
+ pinctrl-1 = <&spi0_sleep_alt>;
  pinctrl-names = "default", "sleep";
  cs-gpios = <&gpio0 6 0>;
 
@@ -632,10 +610,20 @@
   reg = <0>;
   irq-gpios = <&gpio0 20 0>;
   spi-max-frequency = <2000000>;
-  label = "PMW3360";
+  label = "pmw3360";
  };
 };
-# 95 "C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board.dts"
+
+&qdec {
+ status = "okay";
+ enable-pin = <30>;
+ led-pre = <0>;
+ steps = <24>;
+ pinctrl-0 = <&qdec_default>;
+ pinctrl-1 = <&qdec_sleep>;
+ pinctrl-names = "default", "sleep";
+};
+
 &flash0 {
  partitions {
   compatible = "fixed-partitions";
@@ -663,6 +651,11 @@
    reg = <0x3a000 0x6000>;
   };
  };
+};
+
+zephyr_udc0: &usbd {
+ compatible = "nordic,nrf-usbd";
+ status = "okay";
 };
 # 1 "<command-line>" 2
 # 1 "C:/Programming/ncs/v2.0.2/zephyr/misc/empty_file.c"

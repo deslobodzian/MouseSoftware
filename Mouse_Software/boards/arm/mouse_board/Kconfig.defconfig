@@ -9,4 +9,12 @@ config BOARD
 config BT_CTLR
    default BT
 
+config USB_DEVICE_VID
+    hex
+    default "0x1FFE"
+
+config USB_DEVICE_PID
+    hex
+    default "0x220"
+
 endif

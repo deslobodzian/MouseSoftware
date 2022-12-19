@@ -1,5 +1,5 @@
 empty_file.o: C:/Programming/ncs/v2.0.2/zephyr/misc/empty_file.c \
- C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board.dts \
+ C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board.dts \
  C:/Programming/ncs/v2.0.2/zephyr/dts/arm/nordic/nrf52820_qdaa.dtsi \
  C:/Programming/ncs/v2.0.2/zephyr/dts/common/mem.h \
  C:/Programming/ncs/v2.0.2/zephyr/dts/arm/nordic/nrf52820.dtsi \
@@ -11,4 +11,4 @@ empty_file.o: C:/Programming/ncs/v2.0.2/zephyr/misc/empty_file.c \
  C:/Programming/ncs/v2.0.2/zephyr/include/zephyr/dt-bindings/pinctrl/nrf-pinctrl.h \
  C:/Programming/ncs/v2.0.2/zephyr/include/zephyr/dt-bindings/pwm/pwm.h \
  C:/Programming/ncs/v2.0.2/zephyr/dts/arm/nordic/override.dtsi \
- C:/Users/deslo/Documents/Projects/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi
+ C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi

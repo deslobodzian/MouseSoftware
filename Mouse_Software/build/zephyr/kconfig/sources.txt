@@ -1788,8 +1788,8 @@ C:\Programming\ncs\v2.0.2\zephyr\subsys\usb\device\class\audio\Kconfig
 C:\Programming\ncs\v2.0.2\zephyr\subsys\usb\device\class\dfu\Kconfig
 C:\Programming\ncs\v2.0.2\zephyr\subsys\usb\device\class\hid\Kconfig
 C:\Programming\ncs\v2.0.2\zephyr\subsys\usb\device\class\netusb\Kconfig
-C:\Users\deslo\Documents\Projects\Mouse_Software\boards\arm\mouse_board\Kconfig.board
-C:\Users\deslo\Documents\Projects\Mouse_Software\boards\arm\mouse_board\Kconfig.defconfig
-C:\Users\deslo\Documents\Projects\Mouse_Software\build\Kconfig\Kconfig.modules
-C:\Users\deslo\Documents\Projects\Mouse_Software\build\Kconfig\Kconfig.shield
-C:\Users\deslo\Documents\Projects\Mouse_Software\build\Kconfig\Kconfig.shield.defconfig
+C:\Users\deslo\Documents\Projects\MouseSoftware\Mouse_Software\boards\arm\mouse_board\Kconfig.board
+C:\Users\deslo\Documents\Projects\MouseSoftware\Mouse_Software\boards\arm\mouse_board\Kconfig.defconfig
+C:\Users\deslo\Documents\Projects\MouseSoftware\Mouse_Software\build\Kconfig\Kconfig.modules
+C:\Users\deslo\Documents\Projects\MouseSoftware\Mouse_Software\build\Kconfig\Kconfig.shield
+C:\Users\deslo\Documents\Projects\MouseSoftware\Mouse_Software\build\Kconfig\Kconfig.shield.defconfig

@@ -67,9 +67,8 @@
 &spi0 {
 	compatible = "nordic,nrf-spim";
 	status = "okay";
-
-	pinctrl-0 = <&spi0_default>;
-	pinctrl-1 = <&spi0_sleep>;
+	pinctrl-0 = <&spi0_default_alt>;
+	pinctrl-1 = <&spi0_sleep_alt>;
 	pinctrl-names = "default", "sleep";
 	cs-gpios = <&gpio0 6 0>;
 
@@ -78,19 +77,19 @@
 		reg = <0>;
 		irq-gpios = <&gpio0 20 0>;
 		spi-max-frequency = <2000000>;
-		label = "PMW3360";
+		label = "pmw3360";
 	};
 };
 
-// &qdec {
-// 	status = "okay";
-// 	enable-pin = <30>;
-// 	led-pre = <0>;
-// 	steps = <24>;
-// 	pinctrl-0 = <&qdec_default>;
-// 	pinctrl-1 = <&qdec_sleep>;
-// 	pinctrl-names = "default", "sleep";
-// };
+&qdec {
+	status = "okay";
+	enable-pin = <30>;
+	led-pre = <0>;
+	steps = <24>;
+	pinctrl-0 = <&qdec_default>;
+	pinctrl-1 = <&qdec_sleep>;
+	pinctrl-names = "default", "sleep";
+};
 
 &flash0 {
 	partitions {
@@ -121,3 +120,7 @@
 	};
 };
 
+zephyr_udc0: &usbd {
+	compatible = "nordic,nrf-usbd";
+	status = "okay";
+};

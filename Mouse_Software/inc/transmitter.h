@@ -18,17 +18,19 @@
          RADIO_SHORTS_ADDRESS_RSSISTART_Msk |                           \
          RADIO_SHORTS_DISABLED_RSSISTOP_Msk)                            
 
-// static variables 
-static bool ready = true;
-static struct esb_payload rx_payload;
+typedef struct {
+        struct esb_payload received_message;
+        struct esb_payload message;
+        bool ready;
+} ESB_Data;
 
-void event_handler(struct esb_evt const *event);
+void event_handler(ESB_Data *data, struct esb_evt const *event);
 
 int clocks_start(void);
 
 int init_esb(void);
 int init_transciever(void);
 
-int write_message(struct esb_payload payload);
+int write_message(ESB_Data *esb_data);
 
 #endif // MOUSE_TRANSMITTER_H
