@@ -5,9 +5,23 @@
 #include "hw_config.h"
 
 typedef struct {
-    uint8_t message[NUM_MOUSE_BUTTONS + 2];
-    uint8_t state[NUM_MOUSE_BUTTONS + 2]; // 2 for dx and dy
-    struct gpio_callback callback[NUM_MOUSE_BUTTONS + 1]; // 1 for the pmw3360 interupt
+    int16_t dx;
+    int16_t dy;
+} motion_info;
+
+typedef struct {
+    int16_t val;
+} wheel_info;
+
+typedef struct {
+    motion_info motion;
+    uint8_t data[6];
+    uint8_t state[5 + 2]; // 2 for dx and dy
+    struct gpio_callback callback[5 + 1]; // 1 for the pmw3360 interupt
 } MOUSE_Data;
+
+
+
+void init_mouse(void);
 
 #endif // MOUSE_MOUSE_H

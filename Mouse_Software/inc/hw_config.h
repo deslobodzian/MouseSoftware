@@ -4,11 +4,10 @@
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/usb/usb_device.h>
+#include <zephyr/usb/class/usb_hid.h>
 
 #define GPIO_SPEC(node_id) GPIO_DT_SPEC_GET_OR(node_id, gpios, {0})
-
-#define HID_DEVICE_ID               "HID_0"
-#define NUM_MOUSE_BUTTONS           5
 
 #define MOUSE_BUTTON_REPORT_POS     0
 #define MOUSE_X_REPORT_POS          1
@@ -21,7 +20,8 @@
 #define M4_NODE DT_ALIAS(m4)
 #define M5_NODE DT_ALIAS(m5)
 
-static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(NUM_MOUSE_BUTTONS);
+
+// static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(5);
 
 static const struct gpio_dt_spec mouse_one = GPIO_SPEC(M1_NODE),
     mouse_two = GPIO_SPEC(M2_NODE),

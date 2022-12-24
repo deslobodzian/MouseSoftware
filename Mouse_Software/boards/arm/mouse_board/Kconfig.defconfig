@@ -17,4 +17,8 @@ config USB_DEVICE_PID
     hex
     default "0x220"
 
+config CONFIG_USB_HID_POLL_INTERVAL_MS  
+    int
+    default 1
+
 endif
