@@ -21,44 +21,55 @@ const struct device *get_pmw3360_device(void) {
 	return dev;
 }
 
-void trigger_handler(const struct device *pmw3360, const struct sensor_trigger *trig) {
-    int rc;
-    rc = fetch_pmw3360_data(pmw3360);
-    mouse.state[MOUSE_X_REPORT_POS] = get_dx(pmw3360);
-    mouse.state[MOUSE_Y_REPORT_POS] = get_dy(pmw3360);
-    // LOG_DBG("Pos x: %d, y: %d", get_dx(pmw3360), get_dy(pmw3360));
-    k_sem_give(&sem);
+void data_ready_handler(const struct device *pmw3360, const struct sensor_trigger *trig) {
+    k_spinlock_key_t key = k_spin_lock(&pmw3360_dev.state.lock);
+
+    disable_trigger(pmw3360);
+
+    // switch(pmw3360_dev.state.state) {
+    //     case PMW3360_IDLE:
+    //         pmw3360_dev.state.state = PMW3360_FETCHING;
+    //     case PMW3360_DISCONNECTED:
+    //         k_sem_give(&pmw3360_dev.sem);
+    //         break;
+    //     case PMW3360_FETCHING:
+    //     case PMW3360_DISABLED:
+    //     case PMW3360_SUSPENDED:
+    //         break;
+    //     default:
+    //         break;
+    // }
+    k_spin_unlock(&pmw3360_dev.state.lock, key);
 }
 
-void init_pmw3360(PMW3360_Data *pmw3360) {
+void init_pmw3360(void) {
     // set up pmw3360 device;
-    pmw3360->device = get_pmw3360_device();
-    // set up sensor trigger
-    struct sensor_trigger trig;
-    trig.type = SENSOR_TRIG_DATA_READY; 
-    trig.chan = SENSOR_CHAN_ALL; 
+    pmw3360_dev.device = get_pmw3360_device();
+    k_spinlock_key_t key = k_spin_lock(&pmw3360_dev.state.lock);
+    pmw3360_dev.state.state = PMW3360_IDLE;
+    k_spin_unlock(&pmw3360_dev.state.lock, key);
+    enable_trigger(pmw3360_dev.device);
+}
 
-    pmw3360->trigger = &trig;
+void enable_trigger(const struct device *pmw3360) {
+    struct sensor_trigger trigger;
+    trigger.chan = SENSOR_TRIG_DATA_READY;
+    trigger.type = SENSOR_CHAN_ALL;
 
-    // wait for setup to finish.
-	// k_sleep(K_MSEC(500));
-    
-    // init other wanted values.
-    int rc = sensor_sample_fetch(pmw3360->device);
-    LOG_DBG("Failed to fetch -> RC val: %d", rc);
-    int err = 0;
-	const struct sensor_value enable_rest = {
-        .val1 = DISABLE_REST,
-    };
+    // int rc = sensor_trigger_set(pmw3360, &trigger, data_ready_handler);
+    // if (rc) {
+    //     LOG_DBG("Failed to enable trigger");
+    // }
+}
 
-	err = sensor_attr_set(pmw3360->device, SENSOR_CHAN_ALL, PMW3360_ATTR_REST_ENABLE, &enable_rest);
-    LOG_DBG("Error val: %d", err);
+void disable_trigger(const struct device *pmw3360) {
+    struct sensor_trigger trigger;
+    trigger.chan = SENSOR_TRIG_DATA_READY;
+    trigger.type = SENSOR_CHAN_ALL;
 
-    set_cpi(pmw3360->device, INIT_CPI);
-    // LOG_DBG("Setting up sensor trigger");
-    rc = sensor_trigger_set(pmw3360->device, pmw3360->trigger, trigger_handler);
-    if (rc != 0) {
-        LOG_ERR("Trigger set failed");
+    int rc = sensor_trigger_set(pmw3360, &trigger, NULL);
+    if (rc) {
+        LOG_DBG("Failed to disable trigger");
     }
 }
 
@@ -67,18 +78,57 @@ int fetch_pmw3360_data(const struct device *pmw3360) {
     return rc;
 }
 
-int get_dx(const struct device *pmw3360) {
+void read_motion(void) {
+    int16_t dx;
+    int16_t dy;
+
+    int rc = fetch_pmw3360_data(pmw3360_dev.device);
+    if (!rc) {
+        dx = get_dx(pmw3360_dev.device);
+        dy = get_dx(pmw3360_dev.device);
+    }
+
+    motion_event_t motion_event; 
+    motion_event.dx = dx; 
+    motion_event.dy = dx; 
+
+    event_t event = create_motion_event(&motion_event);
+
+    enqueue_event(&manager.event_queue, event);
+    k_sem_give(&manager.event_sem);
+}
+
+void motion_thread(void) {
+    init_pmw3360();
+    for (;;) {
+        read_motion();
+    //     bool event;
+    //     k_sem_take(&pmw3360_dev.sem, K_FOREVER);
+    //     k_spinlock_key_t key = k_spin_lock(&pmw3360_dev.state.lock);
+    //     event = (pmw3360_dev.state.state == PMW3360_FETCHING);
+    //     k_spin_unlock(&pmw3360_dev.state.lock, key);
+    //     if (event) {
+    //         read_motion();
+    //     }
+    //     key = k_spin_lock(&pmw3360_dev.state.lock);
+    //     if (pmw3360_dev.state.state != PMW3360_FETCHING) {
+    //         enable_trigger(pmw3360_dev.device);
+    //     }
+    //     k_spin_unlock(&pmw3360_dev.state.lock, key);
+    }
+}
+
+int16_t get_dx(const struct device *pmw3360) {
     struct sensor_value x;
 	sensor_channel_get(pmw3360, SENSOR_CHAN_POS_DX, &x);
-    // pmw3360->dx = x.val1;
     return x.val1;
 }
 
-int get_dy(const struct device *pmw3360) {
+/* return negative value for Y-axis, as thats how the sensor works.*/
+int16_t get_dy(const struct device *pmw3360) {
     struct sensor_value y;
 	sensor_channel_get(pmw3360, SENSOR_CHAN_POS_DY, &y);
-    // pmw3360->dy = y.val1;
-    return y.val1;
+    return -y.val1;
 }
 
 /**

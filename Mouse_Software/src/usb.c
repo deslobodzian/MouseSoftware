@@ -12,6 +12,13 @@ void status_callback(enum usb_dc_status_code status, const uint8_t *param) {
 }
 
 int init_usb(USB_Data *data) {
+    // static const struct hid_ops hid_ops = {
+	// 	.get_report = get_report,
+	// 	.set_report = set_report,
+	// 	.int_in_ready = report_sent_cb,
+	// 	.protocol_change = protocol_change,
+	// };
+
     data->device = device_get_binding(HID_DEVICE_ID);
     if (data->device == NULL) {
         LOG_ERR("HID Device null");
@@ -33,6 +40,27 @@ int init_usb(USB_Data *data) {
 
 int hid_write(USB_Data *data) {
     int ret = 0;
-    ret = hid_int_ep_write(data->device, mouse.state, sizeof(&mouse.state), NULL);
+    ret = hid_int_ep_write(data->device, mouse.data, 6, NULL);
     return ret;
 }
+
+// static void report_sent(const struct device *dev, bool error) {
+// }
+
+// static void report_sent_callback(const struct device *dev) {
+//     report_sent(dev, false);
+// }
+
+// void send_report() {
+//     const uint8_t *report_buffer = mouse.data;
+//     int err = hid_int_ep_write(
+//         usb.device,
+//         report_buffer,
+//         sizeof(report_buffer),
+//         NULL
+//     );
+
+//     if (err) {
+//         LOG_ERR("Cannot send report (&d)", err);
+//     }
+// }
