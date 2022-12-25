@@ -1,4 +1,4 @@
-# Install script for directory: C:/Programming/ncs/v2.1.0/zephyr/lib
+# Install script for directory: C:/Programming/ncs/v2.0.2/zephyr/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,26 +34,26 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Programming/ncs/toolchains/v2.1.0/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Programming/ncs/toolchains/v2.0.2/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software/build/zephyr/lib/libc/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/lib/libc/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software/build/zephyr/lib/posix/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/lib/posix/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software/build/zephyr/lib/os/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/lib/os/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software/build/zephyr/lib/util/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/lib/util/cmake_install.cmake")
 endif()
 

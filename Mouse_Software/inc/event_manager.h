@@ -4,6 +4,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/sys/sem.h>
 #include <zephyr/spinlock.h>
+#include "hid.h"
 #include "event_types.h"
 
 #define NUM_EVENTS 10
@@ -32,6 +33,7 @@ void init_event_queue(event_queue_t* event_queue);
 void create_event(event_t* event, event_type_t type, const void* data, size_t size);
 
 event_t create_motion_event(motion_event_t* motion_event);
+event_t create_hid_event(hid_event_t* hid_event);
 
 void enqueue_event(event_queue_t* event_queue, event_t event);
 

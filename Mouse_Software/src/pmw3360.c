@@ -88,14 +88,16 @@ void read_motion(void) {
         dy = get_dx(pmw3360_dev.device);
     }
 
-    motion_event_t motion_event; 
-    motion_event.dx = dx; 
-    motion_event.dy = dx; 
+    LOG_DBG("dx: %i, dy: %i");
+    k_sleep(K_MSEC(1));
+    // motion_event_t motion_event; 
+    // motion_event.dx = dx; 
+    // motion_event.dy = dx; 
 
-    event_t event = create_motion_event(&motion_event);
+    // event_t event = create_motion_event(&motion_event);
 
-    enqueue_event(&manager.event_queue, event);
-    k_sem_give(&manager.event_sem);
+    // enqueue_event(&manager.event_queue, event);
+    // k_sem_give(&manager.event_sem);
 }
 
 void motion_thread(void) {

@@ -17,6 +17,7 @@
 #include "event_manager.h"
 #include "pmw3360.h"
 #include "buttons.h"
+#include "hid.h"
 #include "transmitter.h"
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/logging/log.h>
@@ -29,6 +30,7 @@ LOG_MODULE_REGISTER(app, CONFIG_LOG_DEFAULT_LEVEL);
 K_SEM_DEFINE(sem, 0, 1);
 event_manager_t manager;
 USB_Data usb;
+hid_device_t hid_device;
 ESB_Data transmitter;
 MOUSE_Data mouse;
 pmw3360_device pmw3360_dev;

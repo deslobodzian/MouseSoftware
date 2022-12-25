@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software
+# Install script for directory: C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,12 +34,12 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Programming/ncs/toolchains/v2.1.0/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/Programming/ncs/toolchains/v2.0.2/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software/build/zephyr/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/deslo/OneDrive/Documents/Mouse_Project/Dongle_Software/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

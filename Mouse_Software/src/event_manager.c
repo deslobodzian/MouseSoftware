@@ -25,6 +25,13 @@ event_t create_motion_event(motion_event_t* motion_event) {
     return event;
 }
 
+event_t create_hid_event(hid_event_t* hid_event) {
+    event_t event;
+    size_t size = sizeof(hid_event_t);
+    create_event(&event, HID_EVENT, hid_event, size);
+    return event;
+}
+
 void enqueue_event(event_queue_t* event_queue, event_t event) {
     if (is_queue_full(event_queue)) {
         return;
@@ -35,6 +42,7 @@ void enqueue_event(event_queue_t* event_queue, event_t event) {
     event_queue->count++;
     k_sem_give(&event_queue->sem);
 }
+
 event_t dequeue_event(event_queue_t* event_queue) {
     event_t event;
     if (is_queue_empty(event_queue)) {
@@ -93,12 +101,31 @@ void event_manager_thread(void* arg1, void* arg2, void* arg3) {
             switch (event.type) {
                 case MOTION_EVENT: {
                     motion_event_t* motion_event = (motion_event_t*)event.data;
-                    int16_t dx = motion_event->dx;
-                    int16_t dy = motion_event->dy;
+                    uint16_t dx = motion_event->dx;
+                    uint16_t dy = motion_event->dy;
+                    // LOG_DBG("dx: %i, dy: %i", dx, dy);
+                    // handle_motion_event(motion_event);
+                    // k_sleep(K_MSEC(1));
                 }
                 case BUTTON_EVENT:
                 case WHEEL_EVENT:
-                case HID_EVENT:
+                case HID_EVENT: {
+                    // LOG_DBG("HID Event occured");
+                    hid_event_t* hid_event = (hid_event_t*)event.data;
+                    // LOG_DBG("HID Message: %i, %i, %i, %i, %i, %i",
+                    //     hid_event->message[0],
+                    //     hid_event->message[1],
+                    //     hid_event->message[2],
+                    //     hid_event->message[3],
+                    //     hid_event->message[4],
+                    //     hid_event->message[5]
+                    // );
+                    int ret = hid_write(&usb, hid_event->message);
+                    if (ret) {
+                        // LOG_DBG("USB write error: %i", ret);
+                    }
+
+                }
                 case INVALID_EVENT:
                     break;
                 default:

@@ -13,6 +13,14 @@
         "devicetree.h": "c",
         "usb_device.h": "c",
         "buttons.h": "c",
-        "structs.h": "c"
-    }
+        "structs.h": "c",
+        "device.h": "c",
+        "hw_config.h": "c",
+        "limits.h": "c",
+        "hid.h": "c",
+        "module_state_event.h": "c",
+        "slist.h": "c",
+        "sem.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

@@ -5,18 +5,22 @@
  */
 
 #include <zephyr.h>
+#include <logging/log.h>
+#include "receiver.h"
 
-void main(void)
-{
-	char c = 0;
-for (;;)
-{
-	c = SEGGER_RTT_WaitKey(); // will block until data is available
-	if(c == 'r'){
-		SEGGER_RTT_WriteString(0, "Resetting..\n");
-		nrf_delay_ms(1000);
-		sd_nvic_SystemReset();
+LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
+
+void main(void) {
+	struct esb_payload dummy;
+	init_esb();
+	int len;
+	int x;
+	int y;
+	for (;;) {
+		dummy = get_payload();
+		len = dummy.length;
+		x = dummy.data[0];
+		y = dummy.data[1];
+		// LOG_INF("Test");
 	}
-	//power_manage();
-}
 }
