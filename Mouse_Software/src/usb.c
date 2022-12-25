@@ -40,7 +40,7 @@ int init_usb(USB_Data *data) {
 
 int hid_write(USB_Data *data, uint8_t msg) {
     int ret = 0;
-    ret = hid_int_ep_write(data->device, msg, 6, NULL);
+    ret = hid_int_ep_write(data->device, mouse.data, 6, NULL);
     return ret;
 }
 

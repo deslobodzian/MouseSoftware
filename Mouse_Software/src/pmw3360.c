@@ -85,19 +85,19 @@ void read_motion(void) {
     int rc = fetch_pmw3360_data(pmw3360_dev.device);
     if (!rc) {
         dx = get_dx(pmw3360_dev.device);
-        dy = get_dx(pmw3360_dev.device);
+        dy = get_dy(pmw3360_dev.device);
     }
 
-    LOG_DBG("dx: %i, dy: %i");
-    k_sleep(K_MSEC(1));
-    // motion_event_t motion_event; 
-    // motion_event.dx = dx; 
-    // motion_event.dy = dx; 
+    // LOG_DBG("dx: %i, dy: %i", dx, dy);
+    motion_event_t motion_event; 
+    motion_event.dx = dx; 
+    motion_event.dy = dy; 
 
-    // event_t event = create_motion_event(&motion_event);
+    event_t event = create_motion_event(&motion_event);
 
-    // enqueue_event(&manager.event_queue, event);
-    // k_sem_give(&manager.event_sem);
+    enqueue_event(&manager.event_queue, event);
+    k_sem_give(&manager.event_sem);
+    k_sleep(K_USEC(50));
 }
 
 void motion_thread(void) {
@@ -130,7 +130,7 @@ int16_t get_dx(const struct device *pmw3360) {
 int16_t get_dy(const struct device *pmw3360) {
     struct sensor_value y;
 	sensor_channel_get(pmw3360, SENSOR_CHAN_POS_DY, &y);
-    return -y.val1;
+    return y.val1;
 }
 
 /**

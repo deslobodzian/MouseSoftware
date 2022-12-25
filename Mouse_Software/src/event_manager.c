@@ -36,21 +36,17 @@ void enqueue_event(event_queue_t* event_queue, event_t event) {
     if (is_queue_full(event_queue)) {
         return;
     }
-
     event_queue->events[event_queue->tail] = event;
     event_queue->tail = (event_queue->tail + 1) % NUM_EVENTS;
     event_queue->count++;
     k_sem_give(&event_queue->sem);
 }
 
-event_t dequeue_event(event_queue_t* event_queue) {
-    event_t event;
+event_t* dequeue_event(event_queue_t* event_queue) {
     if (is_queue_empty(event_queue)) {
-        event.type = INVALID_EVENT;
-        return event;
+        return NULL;
     }
-
-    event = event_queue->events[event_queue->head];
+    event_t* event = &event_queue->events[event_queue->head];
     event_queue->head = (event_queue->head + 1) & NUM_EVENTS;
     event_queue->count--;
     return event;
@@ -97,34 +93,32 @@ void event_manager_thread(void* arg1, void* arg2, void* arg3) {
         k_sem_take(&event_manager->event_sem, K_FOREVER);
         k_spinlock_key_t key = k_spin_lock(&event_manager->queue_lock);
         while (!is_queue_empty(&event_manager->event_queue)) {
-            event_t event = dequeue_event(&event_manager->event_queue);
-            switch (event.type) {
+            event_t* event = dequeue_event(&event_manager->event_queue);
+            if (!event) {
+                break;
+            }
+            switch (event->type) {
                 case MOTION_EVENT: {
-                    motion_event_t* motion_event = (motion_event_t*)event.data;
-                    uint16_t dx = motion_event->dx;
-                    uint16_t dy = motion_event->dy;
-                    // LOG_DBG("dx: %i, dy: %i", dx, dy);
-                    // handle_motion_event(motion_event);
-                    // k_sleep(K_MSEC(1));
+                    motion_event_t* motion_event = (motion_event_t*)event->data;
+                    handle_motion_event(motion_event);
+                    break;
                 }
-                case BUTTON_EVENT:
-                case WHEEL_EVENT:
+                case BUTTON_EVENT: {
+                    break;
+                }
+                case WHEEL_EVENT: {
+                    break;
+                }
                 case HID_EVENT: {
-                    // LOG_DBG("HID Event occured");
-                    hid_event_t* hid_event = (hid_event_t*)event.data;
-                    // LOG_DBG("HID Message: %i, %i, %i, %i, %i, %i",
-                    //     hid_event->message[0],
-                    //     hid_event->message[1],
-                    //     hid_event->message[2],
-                    //     hid_event->message[3],
-                    //     hid_event->message[4],
-                    //     hid_event->message[5]
-                    // );
+                    // event.data;
+                    hid_event_t* hid_event = (hid_event_t*)event->data;
+                   
+                    // k_sleep(K_MSEC(1));
                     int ret = hid_write(&usb, hid_event->message);
-                    if (ret) {
-                        // LOG_DBG("USB write error: %i", ret);
-                    }
-
+                    // if (ret) {
+                    //     // LOG_DBG("USB write error: %i", ret);
+                    // }
+                    break;
                 }
                 case INVALID_EVENT:
                     break;

@@ -20,8 +20,8 @@ typedef struct {
 
 typedef struct {
     event_type_t type;
-    uint16_t dx;
-    uint16_t dy;
+    int16_t dx;
+    int16_t dy;
 } motion_event_t;
 
 
@@ -32,7 +32,7 @@ typedef struct {
 
 typedef struct {
     event_type_t type;
-    uint16_t motion;
+    int16_t motion;
 } wheel_event_t;
 
 typedef struct {

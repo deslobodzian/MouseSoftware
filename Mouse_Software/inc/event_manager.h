@@ -37,7 +37,7 @@ event_t create_hid_event(hid_event_t* hid_event);
 
 void enqueue_event(event_queue_t* event_queue, event_t event);
 
-event_t dequeue_event(event_queue_t* event_queue);
+event_t *dequeue_event(event_queue_t* event_queue);
 
 bool is_queue_empty(event_queue_t* event_queue);
 

@@ -1,11 +1,11 @@
 #ifndef MOUSE_STRUCTS_H
 #define MOUSE_STRUCTS_H
 
+#include "pmw3360.h"
 #include "event_manager.h"
 #include "fsm.h"
 #include "transmitter.h"
 #include "buttons.h"
-#include "pmw3360.h"
 #include "usb.h"
 #include "mouse.h"
 #include "hid.h"
