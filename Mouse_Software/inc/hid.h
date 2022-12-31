@@ -8,65 +8,49 @@
 #include "event_manager.h"
 #include <zephyr/sys/slist.h>
 #include <zephyr/sys/byteorder.h>
+// #include "usb.h"
 
-
-typedef enum {
-    HID_DISCONNECTED,
-    HID_CONNECTED_IDLE,
-    HID_CONNECTED_BUSY
-} enum_state_t;
+#define HID_REPORT_QUEUE_SIZE 16
+#define MAX_DATA_SIZE 32
+#define HID_STACK_SIZE 1024 // bytes
 
 typedef struct {
-    uint16_t usage_id;
-    int16_t value;
-} item_t;
-
-/* Struct keeping state of a single hid target */
-typedef struct {
-    item_t item[NUM_ITEMS];
-    size_t item_size;
-} items_t;
+    uint8_t data[MAX_DATA_SIZE];
+    size_t size;
+} hid_report_t;
 
 typedef struct {
-    int16_t axis[NUM_AXIS];
-} axis_data_t;
+    hid_report_t reports[HID_REPORT_QUEUE_SIZE];
+    uint8_t head;
+    uint8_t tail;
+    uint8_t count;
+    struct k_sem sem;
+} hid_report_queue_t;
 
 typedef struct {
-    items_t items;
-    axis_data_t axes;
-    // struct report state *linked_rs;
-} report_data_t;
-
-typedef struct {
-    enum_state_t state;
-    uint8_t num;
-    // report_data_t *linked_rd;
-    bool update_needed;
-} report_state_t;
-
-typedef struct {
-    report_data_t report_data;
-    // hid_device_t device;
-} hid_state_t;
-
-typedef struct {
-    hid_state_t hid_state;
-    report_state_t report_state;
-} hid_device_t;
+    hid_report_queue_t queue;
+    struct k_thread thread;
+    k_tid_t tid;
+    uint16_t report_interval_hz;
+} hid_t;
 
 
+void init_hid(hid_t* hid);
 
+void init_hid_report_queue(hid_report_queue_t* queue);
 
-void init_hid(hid_device_t* hid_device);
+bool is_queue_full(hid_report_queue_t* queue);
 
-report_data_t *get_report_data(hid_device_t* hid_device);
-// static bool report_send(report_state_t *rs, report_data_t *rd, bool check_state, bool send_always);
-static void send_report(report_data_t *rd);
+bool is_queue_empty(hid_report_queue_t* queue);
 
-bool handle_motion_event(motion_event_t* motion_event);
+void enqueue_hid_report(hid_report_queue_t* queue, hid_report_t* report);
 
-bool handle_button_event(button_event_t* button_event);
+hid_report_t* dequeue_hid_report(hid_report_queue_t* queue);
 
-bool handle_wheel_event(wheel_event_t* wheel_event);
+void send_hid_report(hid_t* hid, hid_report_t* report);
+
+hid_report_t generate_motion_report(motion_event_t* event);
+
+void hid_thread(void* arg1, void* arg2, void* arg3);
 
 #endif // MOUSE_HID_H

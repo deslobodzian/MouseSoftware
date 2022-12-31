@@ -7,20 +7,19 @@
 typedef struct {
     int16_t dx;
     int16_t dy;
-} motion_info;
+} motion_info_t;
 
 typedef struct {
     int16_t val;
-} wheel_info;
+} wheel_info_t;
+
 
 typedef struct {
-    motion_info motion;
+    motion_info_t motion;
     uint8_t data[6];
     uint8_t state[5 + 2]; // 2 for dx and dy
     struct gpio_callback callback[5 + 1]; // 1 for the pmw3360 interupt
 } MOUSE_Data;
-
-
 
 void init_mouse(void);
 

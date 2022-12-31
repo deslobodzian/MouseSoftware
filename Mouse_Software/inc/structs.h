@@ -14,7 +14,7 @@
 extern struct k_sem sem;
 extern event_manager_t manager;
 
-extern hid_device_t hid_device;
+extern hid_t hid_device;
 extern USB_Data usb;
 // extern hid_state hid_state;
 extern ESB_Data transmitter;

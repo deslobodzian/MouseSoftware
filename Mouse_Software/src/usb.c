@@ -38,9 +38,9 @@ int init_usb(USB_Data *data) {
     // return usb_enable(status_callback);
 }
 
-int hid_write(USB_Data *data, uint8_t msg) {
+int hid_write(USB_Data* data, hid_report_t* report) {
     int ret = 0;
-    ret = hid_int_ep_write(data->device, mouse.data, 6, NULL);
+    ret = hid_int_ep_write(data->device, report->data, report->size, NULL);
     return ret;
 }
 

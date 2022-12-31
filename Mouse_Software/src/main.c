@@ -31,7 +31,7 @@ K_SEM_DEFINE(sem, 0, 1);
 event_manager_t manager;
 pmw3360_device pmw3360_dev;
 USB_Data usb;
-hid_device_t hid_device;
+hid_t hid_device;
 ESB_Data transmitter;
 MOUSE_Data mouse;
 FSM_Data fsm;
@@ -39,18 +39,19 @@ FSM_Data fsm;
 
 void main(void)
 {
-	k_sleep(K_MSEC(1000));
 	// fsm.state = INIT_MODE;
 	init_usb(&usb);
-	// init_pmw3360();
-	// run_fsm(&fsm);
+	init_pmw3360();
+	init_hid(&hid_device);
+	init_event_manager(&manager, &hid_device);
 	k_sleep(K_MSEC(1000));
-	init_event_manager(&manager);
+	// run_fsm(&fsm);
+	start_thread();
 	start_event_manager(&manager);
 
-	motion_thread();
+	// motion_thread();
 
 	for (;;) {
-		// k_sleep(K_MSEC(1));
+		k_sleep(K_MSEC(1));
 	}
 }

@@ -5,6 +5,7 @@
 #include <zephyr/usb/class/usb_hid.h>
 #include <zephyr/sys/byteorder.h>
 #include "hid_config.h"
+#include "hid.h"
 
 
 typedef struct {
@@ -19,7 +20,7 @@ void status_callback(enum usb_dc_status_code status, const uint8_t *param);
 
 int init_usb(USB_Data *data);
 
-int hid_write(USB_Data *data, uint8_t msg);
+int hid_write(USB_Data *data, hid_report_t* msg);
 
 // these are used for HID_OPS of Zephyr lib.
 // static void report_sent(const struct device *dev, bool error);

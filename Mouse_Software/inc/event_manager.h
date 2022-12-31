@@ -8,7 +8,7 @@
 #include "event_types.h"
 
 #define NUM_EVENTS 10
-#define EVENT_MANAGER_STACK_SIZE 512// bytes
+#define EVENT_MANAGER_STACK_SIZE 1024 // bytes
 
 
 typedef struct {
@@ -33,23 +33,26 @@ void init_event_queue(event_queue_t* event_queue);
 void create_event(event_t* event, event_type_t type, const void* data, size_t size);
 
 event_t create_motion_event(motion_event_t* motion_event);
+
 event_t create_hid_event(hid_event_t* hid_event);
 
 void enqueue_event(event_queue_t* event_queue, event_t event);
 
 event_t *dequeue_event(event_queue_t* event_queue);
 
-bool is_queue_empty(event_queue_t* event_queue);
+bool is_event_queue_empty(event_queue_t* event_queue);
 
-bool is_queue_full(event_queue_t* event_queue);
+bool is_event_queue_full(event_queue_t* event_queue);
 
-void init_event_manager(event_manager_t* event_manager);
+void init_event_manager(event_manager_t* event_manager, hid_t* hid);
 
 void start_event_manager(event_manager_t* event_manager);
 
 void stop_event_manager(event_manager_t* event_manager);
 
 void event_manager_thread(void* arg1, void* arg2, void* arg3);
+
+void motion_event_handler(motion_event_t* event);
 
 
 #endif // MOUSE_EVENT_MANGER_H

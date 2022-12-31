@@ -33,7 +33,8 @@ event_t create_hid_event(hid_event_t* hid_event) {
 }
 
 void enqueue_event(event_queue_t* event_queue, event_t event) {
-    if (is_queue_full(event_queue)) {
+    // LOG_DBG("enqueue event");
+    if (is_event_queue_full(event_queue)) {
         return;
     }
     event_queue->events[event_queue->tail] = event;
@@ -43,7 +44,7 @@ void enqueue_event(event_queue_t* event_queue, event_t event) {
 }
 
 event_t* dequeue_event(event_queue_t* event_queue) {
-    if (is_queue_empty(event_queue)) {
+    if (is_event_queue_empty(event_queue)) {
         return NULL;
     }
     event_t* event = &event_queue->events[event_queue->head];
@@ -52,15 +53,15 @@ event_t* dequeue_event(event_queue_t* event_queue) {
     return event;
 }
 
-bool is_queue_empty(event_queue_t* event_queue) {
+bool is_event_queue_empty(event_queue_t* event_queue) {
     return event_queue->count == 0;
 }
 
-bool is_queue_full(event_queue_t* event_queue) {
+bool is_event_queue_full(event_queue_t* event_queue) {
     return event_queue->count == NUM_EVENTS;
 }
 
-void init_event_manager(event_manager_t* event_manager) {
+void init_event_manager(event_manager_t* event_manager, hid_t* hid) {
     init_event_queue(&event_manager->event_queue);
     k_sem_init(&event_manager->event_sem, 0, NUM_EVENTS);
     event_manager->event_manager_tid = k_thread_create(
@@ -69,7 +70,7 @@ void init_event_manager(event_manager_t* event_manager) {
         EVENT_MANAGER_STACK_SIZE,
         (k_thread_entry_t)event_manager_thread,
         event_manager,
-        NULL,
+        hid,
         NULL,
         K_PRIO_COOP(7),
         0,
@@ -79,6 +80,7 @@ void init_event_manager(event_manager_t* event_manager) {
 }
 
 void start_event_manager(event_manager_t* event_manager) {
+    LOG_DBG("Starting Thread");
     k_thread_start(event_manager->event_manager_tid);
 }
 
@@ -87,12 +89,14 @@ void stop_event_manager(event_manager_t* event_manager) {
 }
 
 void event_manager_thread(void* arg1, void* arg2, void* arg3) {
+    LOG_DBG("Manager started");
     event_manager_t* event_manager = (event_manager_t*)arg1;
+    hid_t* hid = (hid_t*)arg2;
 
     for(;;) {
         k_sem_take(&event_manager->event_sem, K_FOREVER);
         k_spinlock_key_t key = k_spin_lock(&event_manager->queue_lock);
-        while (!is_queue_empty(&event_manager->event_queue)) {
+        while (!is_event_queue_empty(&event_manager->event_queue)) {
             event_t* event = dequeue_event(&event_manager->event_queue);
             if (!event) {
                 break;
@@ -110,14 +114,6 @@ void event_manager_thread(void* arg1, void* arg2, void* arg3) {
                     break;
                 }
                 case HID_EVENT: {
-                    // event.data;
-                    hid_event_t* hid_event = (hid_event_t*)event->data;
-                   
-                    // k_sleep(K_MSEC(1));
-                    int ret = hid_write(&usb, hid_event->message);
-                    // if (ret) {
-                    //     // LOG_DBG("USB write error: %i", ret);
-                    // }
                     break;
                 }
                 case INVALID_EVENT:
@@ -130,5 +126,8 @@ void event_manager_thread(void* arg1, void* arg2, void* arg3) {
     }
 }
 
+void motion_event_handler(motion_event_t* event) {
+    generate_motion_report(event);
+}
 
 
