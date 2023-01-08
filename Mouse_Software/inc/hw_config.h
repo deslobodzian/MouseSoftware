@@ -23,10 +23,4 @@
 
 // static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(5);
 
-static const struct gpio_dt_spec mouse_one = GPIO_SPEC(M1_NODE),
-    mouse_two = GPIO_SPEC(M2_NODE),
-    mouse_three = GPIO_SPEC(M3_NODE),
-    mouse_four = GPIO_SPEC(M4_NODE),
-    mouse_five = GPIO_SPEC(M5_NODE);
-
 #endif // MOUSE_HW_INFO_H

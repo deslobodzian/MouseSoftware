@@ -503,7 +503,7 @@
 
 
 &pinctrl {
-# 30 "C:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi"
+
  spi0_default_alt: spi0_default_alt {
   group1 {
    psels = <((((((0) * 32U) + (7)) & 0x3FU) << 0U) | ((4U & 0xFFFFU) << 16U))>,
