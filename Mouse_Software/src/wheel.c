@@ -18,7 +18,7 @@ wheel_data_t fetch_wheel_data(void) {
     err = sensor_channel_get(qdec_dev, SENSOR_CHAN_ROTATION, &value);
 
     int16_t wheel = value.val1;
-    LOG_DBG("Wheel rot: %i", wheel);
+    // LOG_DBG("Wheel rot: %i", wheel);
     wheel_data_t data;
     data.rotation = wheel;
     return data;

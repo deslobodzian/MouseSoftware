@@ -56,7 +56,8 @@ void main(void) {
 		// );
 		// get_state(&button_states);
 		// LOG_DBG("Button state: %i", button_states);
-		hid_write(&button_states, wheel.rotation, motion.dx, -motion.dy);
+		wheel.rotation = 0;
+		// hid_write(&button_states, wheel.rotation, motion.dx, -motion.dy);
 		// hid_write(0, 0);
 		stop = k_cycle_get_32();
 		dur = stop - start;
