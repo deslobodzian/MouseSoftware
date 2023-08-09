@@ -13,7 +13,6 @@ bool init_buttons(void);
 
 int button_debounce(void);
 
-static uint8_t get_bit(uint32_t pin);
 static void configure_callback(const struct gpio_dt_spec *spec, gpio_callback_handler_t handler, struct gpio_callback *cb);
 
 void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins);

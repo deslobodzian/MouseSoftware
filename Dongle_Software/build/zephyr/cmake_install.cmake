@@ -1,8 +1,8 @@
-# Install script for directory: C:/Programming/ncs/v2.0.2/zephyr
+# Install script for directory: C:/ncs/v2.3.0/zephyr
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Zephyr-Kernel")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files/Zephyr-Kernel")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Programming/ncs/toolchains/v2.0.2/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "C:/ncs/toolchains/v2.3.0/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -74,6 +74,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/hostap/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/mcuboot/cmake_install.cmake")
 endif()
 
@@ -94,12 +99,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/zcbor/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/azure-sdk-for-c/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/memfault-firmware-sdk/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/cirrus-logic/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -115,11 +125,6 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/chre/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/civetweb/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -144,12 +149,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/hal_wurthelektronik/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/libmetal/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/liblc3codec/cmake_install.cmake")
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/liblc3/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
@@ -194,6 +204,11 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/picolibc/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/segger/cmake_install.cmake")
 endif()
 
@@ -210,6 +225,16 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
   include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/TraceRecorder/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/uoscore-uedhoc/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/modules/zcbor/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)

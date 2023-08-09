@@ -9,9 +9,9 @@
 #ifndef _ASMLANGUAGE
 
 #include <syscall_list.h>
-#include <syscall.h>
+#include <zephyr/syscall.h>
 
-#include <linker/sections.h>
+#include <zephyr/linker/sections.h>
 
 
 #ifdef __cplusplus
@@ -793,6 +793,43 @@ static inline void k_event_set(struct k_event * event, uint32_t events)
 #endif
 	compiler_barrier();
 	z_impl_k_event_set(event, events);
+}
+
+
+extern void z_impl_k_event_set_masked(struct k_event * event, uint32_t events, uint32_t events_mask);
+
+__pinned_func
+static inline void k_event_set_masked(struct k_event * event, uint32_t events, uint32_t events_mask)
+{
+#ifdef CONFIG_USERSPACE
+	if (z_syscall_trap()) {
+		union { uintptr_t x; struct k_event * val; } parm0 = { .val = event };
+		union { uintptr_t x; uint32_t val; } parm1 = { .val = events };
+		union { uintptr_t x; uint32_t val; } parm2 = { .val = events_mask };
+		(void) arch_syscall_invoke3(parm0.x, parm1.x, parm2.x, K_SYSCALL_K_EVENT_SET_MASKED);
+		return;
+	}
+#endif
+	compiler_barrier();
+	z_impl_k_event_set_masked(event, events, events_mask);
+}
+
+
+extern void z_impl_k_event_clear(struct k_event * event, uint32_t events);
+
+__pinned_func
+static inline void k_event_clear(struct k_event * event, uint32_t events)
+{
+#ifdef CONFIG_USERSPACE
+	if (z_syscall_trap()) {
+		union { uintptr_t x; struct k_event * val; } parm0 = { .val = event };
+		union { uintptr_t x; uint32_t val; } parm1 = { .val = events };
+		(void) arch_syscall_invoke2(parm0.x, parm1.x, K_SYSCALL_K_EVENT_CLEAR);
+		return;
+	}
+#endif
+	compiler_barrier();
+	z_impl_k_event_clear(event, events);
 }
 
 

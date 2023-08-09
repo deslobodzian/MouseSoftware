@@ -1,0 +1,13 @@
+# Target labels
+ Mouse_Software
+# Source files and their labels
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/CMakeFiles/Mouse_Software
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/CMakeFiles/Mouse_Software.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/CMakeFiles/Mouse_Software-complete.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-build.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-configure.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-download.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-install.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-mkdir.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-patch.rule
+D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software-prefix/src/Mouse_Software-stamp/Mouse_Software-update.rule

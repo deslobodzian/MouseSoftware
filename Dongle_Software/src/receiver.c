@@ -2,26 +2,30 @@
 
 LOG_MODULE_REGISTER(esb_receiver, CONFIG_LOG_DEFAULT_LEVEL);
 
+static struct esb_payload rx_payload;
+
 void event_handler(struct esb_evt const *event) {
     switch (event->evt_id) {
         case ESB_EVENT_TX_SUCCESS:
-            printk("TX SUCCESS EVENT");
+            LOG_DBG("TX SUCCESS EVENT");
             break;
         case ESB_EVENT_TX_FAILED:
-            printk("TX FAILED EVENT");
+            LOG_DBG("TX FAILED EVENT");
             break;
         case ESB_EVENT_RX_RECEIVED:
             if (esb_read_rx_payload(&rx_payload) == 0) {
-                printk("Packet received, len %d : "
-				"0x%02x, 0x%02x, 0x%02x, 0x%02x, "
-				"0x%02x, 0x%02x, 0x%02x, 0x%02x",
-				rx_payload.length, rx_payload.data[0],
-				rx_payload.data[1], rx_payload.data[2],
-				rx_payload.data[3], rx_payload.data[4],
-				rx_payload.data[5], rx_payload.data[6],
-				rx_payload.data[7]);
-            } else {
-                printk("Error while reading rx packet");
+                LOG_DBG("Packet received, len %d ", rx_payload.length);
+				// "0x%02x, 0x%02x, 0x%02x, 0x%02x, "
+			// 	// "0x%02x, 0x%02x, 0x%02x, 0x%02x",
+			// 	// rx_payload.length, rx_payload.data[0],
+			// 	// rx_payload.data[1], rx_payload.data[2],
+			// 	// rx_payload.data[3], rx_payload.data[4],
+			// 	// rx_payload.data[5], rx_payload.data[6],
+			// 	// rx_payload.data[7]);
+            //     k_sleep(K_MSEC(1));
+            // } else {
+            //     LOG_ERR("Error while reading rx packet");
+            //     k_sleep(K_MSEC(1));
             }
             break;
     }
@@ -36,7 +40,7 @@ int clocks_start(void) {
 
     clk_mgr = z_nrf_clock_control_get_onoff(CLOCK_CONTROL_NRF_SUBSYS_HF);
     if (!clk_mgr) {
-        printk("Unable to get the Clock manager");
+        LOG_ERR("Unable to get the Clock manager");
         return -ENXIO;
     }
 
@@ -44,19 +48,19 @@ int clocks_start(void) {
 
     err = onoff_request(clk_mgr, &clk_cli);
     if (err < 0) {
-        printk("Clock request failed: %d", err);
+        LOG_ERR("Clock request failed: %d", err);
         return err;
     }
 
     do {
         err = sys_notify_fetch_result(&clk_cli.notify, &res);
         if (!err && res) {
-            printk("Clock could not be started: %d", res);
+            LOG_ERR("Clock could not be started: %d", res);
             return res;
         }
     } while (err);
 
-    printk("HF clock started");
+    LOG_INF("HF clock started");
     return 0;
 }
 
@@ -80,25 +84,25 @@ int init_esb(void) {
     err = esb_init(&config);
 
     if (err) {
-        printk("Error initializing esb");
+        LOG_ERR("Error initializing esb");
         return err;
     }   
 
     err = esb_set_base_address_0(base_addr_0);
     if (err) {
-        printk("Error setting base address 0");
+        LOG_ERR("Error setting base address 0");
         return err;
     }   
 
     err = esb_set_base_address_1(base_addr_1);
     if (err) {
-        printk("Error setting base address 1");
+        LOG_ERR("Error setting base address 1");
         return err;
     }   
 
     err = esb_set_prefixes(addr_prefix, ARRAY_SIZE(addr_prefix));
     if (err) {
-        printk("Error setting address prefix");
+        LOG_ERR("Error setting address prefix");
         return err;
     }   
 
@@ -109,7 +113,7 @@ int init_esb(void) {
 int init_receiver(void) {
     int err;
 
-    printk("Staring mouse board transciever");
+    ("Staring Dongle Board Receiver");
     err = clocks_start();
     if (err < 0) {
         return err;
@@ -117,17 +121,17 @@ int init_receiver(void) {
 
     err = init_esb();
     if (err < 0) {
-        printk("ESB init failed, err %d", err);
+        LOG_ERR("ESB init failed, err %d", err);
         return err;
     }
 
     err = esb_start_rx();
     if (err < 0) {
-        printk("RX setup failed, err %d", err);
+        LOG_ERR("RX setup failed, err %d", err);
         return err;
     }
 
-    printk("Initialization complete");
+    LOG_INF("Initialization complete");
     return 0;
 }
 

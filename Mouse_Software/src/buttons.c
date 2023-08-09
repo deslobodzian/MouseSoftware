@@ -10,8 +10,6 @@ static const struct gpio_dt_spec mouse_one = GPIO_SPEC(M1_NODE),
     mouse_four = GPIO_SPEC(M4_NODE),
     mouse_five = GPIO_SPEC(M5_NODE);
 
-
-static uint8_t button_states;
 static struct gpio_callback callbacks[5];
 
 bool init_buttons(void) {
@@ -21,6 +19,7 @@ bool init_buttons(void) {
     configure_callback(&mouse_three, button_callback, &callbacks[2]);
     configure_callback(&mouse_four, button_callback, &callbacks[3]);
     configure_callback(&mouse_five, button_callback, &callbacks[4]);
+    return true;
 }
 
 static uint8_t get_bit(uint32_t pin) {
@@ -49,6 +48,7 @@ static uint8_t get_bit(uint32_t pin) {
 }
 
 void button_callback(const struct device *dev, struct gpio_callback *cb, uint32_t pins) {
+    get_bit(1);
     // static uint8_t prev_state = 0;
     // int count = 0;
     // uint8_t button_state;

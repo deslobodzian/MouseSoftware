@@ -1,9 +1,7 @@
 {
-    "nrf-connect.applications": [
-        "${workspaceFolder}"
-    ],
-    "nrf-connect.topdir": "${nrf-connect.sdk:2.0.2}",
-    "nrf-connect.toolchain.path": "${nrf-connect.toolchain:2.0.2}",
+    "nrf-connect.applications": [],
+    "nrf-connect.topdir": "${nrf-connect.sdk:2.4.1}",
+    "nrf-connect.toolchain.path": "${nrf-connect.toolchain:2.4.0}",
     "nrf-connect.boardRoots": [
         "${workspaceFolder}"
     ],
@@ -22,7 +20,11 @@
         "slist.h": "c",
         "sem.h": "c",
         "event_manager.h": "c",
-        "periodic_task.h": "c"
+        "periodic_task.h": "c",
+        "log.h": "c",
+        "motion_sensor.h": "c",
+        "transmitter.h": "c",
+        "byteorder.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

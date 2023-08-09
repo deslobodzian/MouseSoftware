@@ -11,15 +11,21 @@ typedef struct {
     int16_t dy;
 } motion_info_t;
 
-bool is_sensor_ready(void);
+void enable_data_interrupt(void);
 
-bool configure_sensor(void);
+void disable_data_interrupt(void);
+
+void interrupt_handler(const struct device *dev, const struct sensor_trigger *trig);
+
+bool is_pmw3360_ready(void);
+
+bool configure_pmw3360(void);
 
 motion_info_t read_motion(void);
+void reset_current_motion_info(void);
+motion_info_t get_current_motion_info(void);
 
 bool set_cpi(uint16_t cpi);
-
-
-
+uint16_t get_cpi(void);
 
 #endif //MOUSE_MOTION_SENSOR_H

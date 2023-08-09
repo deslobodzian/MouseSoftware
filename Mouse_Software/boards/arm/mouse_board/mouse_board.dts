@@ -70,14 +70,13 @@
 	pinctrl-0 = <&spi0_default_alt>;
 	pinctrl-1 = <&spi0_sleep_alt>;
 	pinctrl-names = "default", "sleep";
-	cs-gpios = <&gpio0 6 0>;
+	cs-gpios = <&gpio0 6 GPIO_ACTIVE_LOW>;
 
 	pmw3360@0 {
 		compatible = "pixart,pmw3360";
 		reg = <0>;
-		irq-gpios = <&gpio0 20 0>;
+		irq-gpios = <&gpio0 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 		spi-max-frequency = <2000000>;
-		label = "pmw3360";
 	};
 };
 

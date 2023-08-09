@@ -1,2 +1,2 @@
-osource "c:/Users/deslo/Documents/Projects/MouseSoftware/Mouse_Software/boards/shields/*/Kconfig.shield"
-osource "C:/Programming/ncs/v2.0.2/nrf/boards/shields/*/Kconfig.shield"
+osource "d:/programming/projects/mousesoftware/mouse_software/boards/shields/*/Kconfig.shield"
+osource "D:/Programming/CrossCompilers/ncs/v2.4.1/nrf/boards/shields/*/Kconfig.shield"

@@ -1,0 +1,22 @@
+empty_file.o: \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/misc/empty_file.c \
+ D:/Programming/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board.dts \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/arm/nordic/nrf52820_qdaa.dtsi \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/common/mem.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/arm/nordic/nrf52820.dtsi \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/arm/armv7-m.dtsi \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/common/skeleton.dtsi \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/arm/nordic/nrf_common.dtsi \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/adc/adc.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/adc/nrf-adc.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/dt-util.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/sys/util_macro.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/sys/util_internal.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/sys/util_loops.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/gpio/gpio.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/i2c/i2c.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/pinctrl/nrf-pinctrl.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/dt-bindings/pwm/pwm.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/common/freq.h \
+ D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/dts/arm/nordic/override.dtsi \
+ D:/Programming/Projects/MouseSoftware/Mouse_Software/boards/arm/mouse_board/mouse_board-pinctrl.dtsi

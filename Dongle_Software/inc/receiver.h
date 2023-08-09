@@ -13,7 +13,6 @@
 #include <zephyr/kernel.h>
 #include <zephyr/types.h>
 
-static struct esb_payload rx_payload;
 
 void event_handler(struct esb_evt const *event);
 

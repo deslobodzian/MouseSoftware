@@ -1,0 +1,3 @@
+osource "d:/programming/projects/mousesoftware/mouse_software/boards/shields/*/Kconfig.shield"
+osource "D:/Programming/CrossCompilers/ncs/v2.4.1/nrf/boards/shields/*/Kconfig.shield"
+osource "D:/Programming/CrossCompilers/ncs/v2.4.1/nrf/boards/shields/*/Kconfig.shield"

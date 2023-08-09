@@ -9,7 +9,8 @@ typedef struct {
     int16_t rotation;
 } wheel_data_t;
 
-void init_wheel(void);
+int init_wheel(void);
 
-wheel_data_t fetch_wheel_data(void);
-#endif // MOUSE_WHEEL_
+wheel_data_t fetch_wheel_data();
+
+#endif // MOUSE_WHEEL_H
