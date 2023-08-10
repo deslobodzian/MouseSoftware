@@ -61,6 +61,18 @@
 			reg = < 0x40000000 0x1000 >;
 			interrupts = < 0x0 0x1 >;
 			status = "okay";
+			#address-cells = < 0x1 >;
+			#size-cells = < 0x1 >;
+			gpregret1: gpregret1@4000051c {
+				compatible = "nordic,nrf-gpregret";
+				reg = < 0x4000051c 0x1 >;
+				status = "okay";
+			};
+			gpregret2: gpregret2@40000520 {
+				compatible = "nordic,nrf-gpregret";
+				reg = < 0x40000520 0x1 >;
+				status = "okay";
+			};
 		};
 		radio: radio@40001000 {
 			compatible = "nordic,nrf-radio";
@@ -94,6 +106,7 @@
 			reg = < 0x40003000 0x1000 >;
 			interrupts = < 0x3 0x1 >;
 			max-frequency = < 0x7a1200 >;
+			easydma-maxcnt-bits = < 0xf >;
 			status = "okay";
 			cs-gpios = < &gpio0 0x6 0x0 >;
 			def-char = < 0x0 >;
@@ -117,6 +130,7 @@
 			reg = < 0x40004000 0x1000 >;
 			interrupts = < 0x4 0x1 >;
 			max-frequency = < 0x7a1200 >;
+			easydma-maxcnt-bits = < 0xf >;
 			status = "disabled";
 		};
 		gpiote: gpiote@40006000 {
@@ -127,25 +141,28 @@
 		};
 		timer0: timer@40008000 {
 			compatible = "nordic,nrf-timer";
-			status = "okay";
+			status = "disabled";
 			reg = < 0x40008000 0x1000 >;
 			cc-num = < 0x4 >;
+			max-bit-width = < 0x20 >;
 			interrupts = < 0x8 0x1 >;
 			prescaler = < 0x0 >;
 		};
 		timer1: timer@40009000 {
 			compatible = "nordic,nrf-timer";
-			status = "okay";
+			status = "disabled";
 			reg = < 0x40009000 0x1000 >;
 			cc-num = < 0x4 >;
+			max-bit-width = < 0x20 >;
 			interrupts = < 0x9 0x1 >;
 			prescaler = < 0x0 >;
 		};
 		timer2: timer@4000a000 {
 			compatible = "nordic,nrf-timer";
-			status = "okay";
+			status = "disabled";
 			reg = < 0x4000a000 0x1000 >;
 			cc-num = < 0x4 >;
+			max-bit-width = < 0x20 >;
 			interrupts = < 0xa 0x1 >;
 			prescaler = < 0x0 >;
 			phandle = < 0x5 >;
@@ -155,7 +172,7 @@
 			reg = < 0x4000b000 0x1000 >;
 			cc-num = < 0x3 >;
 			interrupts = < 0xb 0x1 >;
-			status = "okay";
+			status = "disabled";
 			clock-frequency = < 0x8000 >;
 			prescaler = < 0x1 >;
 		};
@@ -195,7 +212,7 @@
 			reg = < 0x40011000 0x1000 >;
 			cc-num = < 0x4 >;
 			interrupts = < 0x11 0x1 >;
-			status = "okay";
+			status = "disabled";
 			clock-frequency = < 0x8000 >;
 			prescaler = < 0x1 >;
 		};
@@ -250,9 +267,10 @@
 		};
 		timer3: timer@4001a000 {
 			compatible = "nordic,nrf-timer";
-			status = "okay";
+			status = "disabled";
 			reg = < 0x4001a000 0x1000 >;
 			cc-num = < 0x6 >;
+			max-bit-width = < 0x20 >;
 			interrupts = < 0x1a 0x1 >;
 			prescaler = < 0x0 >;
 		};

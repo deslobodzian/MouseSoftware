@@ -102,28 +102,23 @@ int init_esb(void) {
     return 0;
 }
 
-
 int init_transceiver(void) {
     int err;
-
     LOG_INF("Staring mouse board transceiver");
-
     err = clocks_start();
-
     if (err) {
         return -1;
     }
-
     err = init_esb();
     if (err) {
         LOG_ERR("ESB init failed, err %d", err);
         return -1;
     }
-
     LOG_INF("Initialization complete");
     esb_data.message.noack = false;
     return 0;
 }
+
 int esb_create_message(motion_info_t *motion, wheel_data_t *wheel, uint8_t* button_states) {
     uint8_t button_bm = 0;
 	for (size_t i = 0; i < 5; i++) {

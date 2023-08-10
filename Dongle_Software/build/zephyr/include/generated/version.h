@@ -5,16 +5,16 @@
  * BUILD_VERSION  will be 'git describe', alternatively user defined BUILD_VERSION.
  */
 
-#define ZEPHYR_VERSION_CODE 197219
+#define ZEPHYR_VERSION_CODE 197475
 #define ZEPHYR_VERSION(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 
-#define KERNELVERSION          0x3026300
-#define KERNEL_VERSION_NUMBER  0x30263
+#define KERNELVERSION          0x3036300
+#define KERNEL_VERSION_NUMBER  0x30363
 #define KERNEL_VERSION_MAJOR   3
-#define KERNEL_VERSION_MINOR   2
+#define KERNEL_VERSION_MINOR   3
 #define KERNEL_PATCHLEVEL      99
-#define KERNEL_VERSION_STRING  "3.2.99"
+#define KERNEL_VERSION_STRING  "3.3.99"
 
-#define BUILD_VERSION          v3.2.99-ncs2
+#define BUILD_VERSION          v3.3.99-ncs1-1
 
 #endif /* _KERNEL_VERSION_H_ */

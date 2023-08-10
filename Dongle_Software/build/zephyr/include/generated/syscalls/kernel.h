@@ -1194,6 +1194,24 @@ static inline int k_msgq_peek(struct k_msgq * msgq, void * data)
 }
 
 
+extern int z_impl_k_msgq_peek_at(struct k_msgq * msgq, void * data, uint32_t idx);
+
+__pinned_func
+static inline int k_msgq_peek_at(struct k_msgq * msgq, void * data, uint32_t idx)
+{
+#ifdef CONFIG_USERSPACE
+	if (z_syscall_trap()) {
+		union { uintptr_t x; struct k_msgq * val; } parm0 = { .val = msgq };
+		union { uintptr_t x; void * val; } parm1 = { .val = data };
+		union { uintptr_t x; uint32_t val; } parm2 = { .val = idx };
+		return (int) arch_syscall_invoke3(parm0.x, parm1.x, parm2.x, K_SYSCALL_K_MSGQ_PEEK_AT);
+	}
+#endif
+	compiler_barrier();
+	return z_impl_k_msgq_peek_at(msgq, data, idx);
+}
+
+
 extern void z_impl_k_msgq_purge(struct k_msgq * msgq);
 
 __pinned_func

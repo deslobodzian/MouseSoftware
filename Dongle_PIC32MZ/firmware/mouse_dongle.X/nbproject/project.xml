@@ -4,14 +4,14 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>mouse_dongle</name>
-            <creation-uuid>57cd9108-3244-4da7-9289-454df9af4e4e</creation-uuid>
+            <creation-uuid>3d04455d-d770-4b3d-a531-dd3bf09f9912</creation-uuid>
             <make-project-type>0</make-project-type>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList/>
             <confList>
                 <confElem>
-                    <name>mouse_dongle</name>
+                    <name>default</name>
                     <type>2</type>
                 </confElem>
             </confList>

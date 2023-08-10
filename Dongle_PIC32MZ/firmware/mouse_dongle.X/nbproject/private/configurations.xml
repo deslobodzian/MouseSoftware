@@ -3,8 +3,8 @@
   <projectmakefile>Makefile</projectmakefile>
   <defaultConf>0</defaultConf>
   <confs>
-    <conf name="mouse_dongle" type="2">
-      <platformToolSN>noToolString</platformToolSN>
+    <conf name="default" type="2">
+      <platformToolSN></platformToolSN>
       <languageToolchainDir>D:\Programming\CrossCompilers\Microchip\xc32\v4.30\bin</languageToolchainDir>
       <mdbdebugger version="1">
         <placeholder1>place holder 1</placeholder1>

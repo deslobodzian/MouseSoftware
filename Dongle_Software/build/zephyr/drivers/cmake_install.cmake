@@ -1,4 +1,4 @@
-# Install script for directory: C:/ncs/v2.3.0/zephyr/drivers
+# Install script for directory: D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/drivers
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,66 +34,66 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/ncs/toolchains/v2.3.0/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
+  set(CMAKE_OBJDUMP "D:/Programming/CrossCompilers/ncs/toolchains/31f4403e35/opt/zephyr-sdk/arm-zephyr-eabi/bin/arm-zephyr-eabi-objdump.exe")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/interrupt_controller/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/disk/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/misc/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/interrupt_controller/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/pcie/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/misc/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/disk/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/pcie/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/usb/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/usb/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/usb_c/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/usb_c/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/clock_control/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/clock_control/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/console/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/console/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/gpio/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/gpio/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/sensor/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/pinctrl/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/timer/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/sensor/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/deslo/Documents/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/pinctrl/cmake_install.cmake")
+  include("D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/timer/cmake_install.cmake")
 endif()
 

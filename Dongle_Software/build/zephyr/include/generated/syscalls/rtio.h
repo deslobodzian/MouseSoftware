@@ -18,6 +18,57 @@
 extern "C" {
 #endif
 
+extern int z_impl_rtio_cqe_get_mempool_buffer(const struct rtio * r, struct rtio_cqe * cqe, uint8_t ** buff, uint32_t * buff_len);
+
+__pinned_func
+static inline int rtio_cqe_get_mempool_buffer(const struct rtio * r, struct rtio_cqe * cqe, uint8_t ** buff, uint32_t * buff_len)
+{
+#ifdef CONFIG_USERSPACE
+	if (z_syscall_trap()) {
+		union { uintptr_t x; const struct rtio * val; } parm0 = { .val = r };
+		union { uintptr_t x; struct rtio_cqe * val; } parm1 = { .val = cqe };
+		union { uintptr_t x; uint8_t ** val; } parm2 = { .val = buff };
+		union { uintptr_t x; uint32_t * val; } parm3 = { .val = buff_len };
+		return (int) arch_syscall_invoke4(parm0.x, parm1.x, parm2.x, parm3.x, K_SYSCALL_RTIO_CQE_GET_MEMPOOL_BUFFER);
+	}
+#endif
+	compiler_barrier();
+	return z_impl_rtio_cqe_get_mempool_buffer(r, cqe, buff, buff_len);
+}
+
+#if defined(CONFIG_TRACING_SYSCALL)
+#ifndef DISABLE_SYSCALL_TRACING
+
+#define rtio_cqe_get_mempool_buffer(r, cqe, buff, buff_len) ({ 	int retval; 	sys_port_trace_syscall_enter(K_SYSCALL_RTIO_CQE_GET_MEMPOOL_BUFFER, rtio_cqe_get_mempool_buffer, r, cqe, buff, buff_len); 	retval = rtio_cqe_get_mempool_buffer(r, cqe, buff, buff_len); 	sys_port_trace_syscall_exit(K_SYSCALL_RTIO_CQE_GET_MEMPOOL_BUFFER, rtio_cqe_get_mempool_buffer, r, cqe, buff, buff_len, retval); 	retval; })
+#endif
+#endif
+
+
+extern void z_impl_rtio_release_buffer(struct rtio * r, void * buff);
+
+__pinned_func
+static inline void rtio_release_buffer(struct rtio * r, void * buff)
+{
+#ifdef CONFIG_USERSPACE
+	if (z_syscall_trap()) {
+		union { uintptr_t x; struct rtio * val; } parm0 = { .val = r };
+		union { uintptr_t x; void * val; } parm1 = { .val = buff };
+		(void) arch_syscall_invoke2(parm0.x, parm1.x, K_SYSCALL_RTIO_RELEASE_BUFFER);
+		return;
+	}
+#endif
+	compiler_barrier();
+	z_impl_rtio_release_buffer(r, buff);
+}
+
+#if defined(CONFIG_TRACING_SYSCALL)
+#ifndef DISABLE_SYSCALL_TRACING
+
+#define rtio_release_buffer(r, buff) do { 	sys_port_trace_syscall_enter(K_SYSCALL_RTIO_RELEASE_BUFFER, rtio_release_buffer, r, buff); 	rtio_release_buffer(r, buff); 	sys_port_trace_syscall_exit(K_SYSCALL_RTIO_RELEASE_BUFFER, rtio_release_buffer, r, buff); } while(false)
+#endif
+#endif
+
+
 extern int z_impl_rtio_sqe_copy_in(struct rtio * r, const struct rtio_sqe * sqes, size_t sqe_count);
 
 __pinned_func

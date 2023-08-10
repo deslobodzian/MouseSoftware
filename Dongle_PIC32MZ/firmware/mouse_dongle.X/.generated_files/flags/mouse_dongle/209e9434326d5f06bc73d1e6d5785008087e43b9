@@ -1,1 +1,0 @@
- $(MP_EXTRA_CC_PRE) -g -D__DEBUG   -fframe-base-loclist  -x c -c -mprocessor=$(MP_PROCESSOR_OPTION)  -ffunction-sections -fdata-sections -O1 -fno-common -I"../src" -I"../src/config/mouse_dongle" -Werror -Wall   -DXPRJ_mouse_dongle=$(CND_CONF)    $(COMPARISON_BUILD)  -mdfp="${DFP_DIR}"  D:\Programming\Projects\MouseSoftware\Dongle_PIC32MZ\firmware\src\main.c

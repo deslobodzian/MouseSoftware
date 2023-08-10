@@ -92,7 +92,7 @@ bool configure_pmw3360(void) {
 
     LOG_INF("CPI is now %u", cpi);
     LOG_INF("Enabling Interrupts");
-    // enable_data_interrupt();
+    enable_data_interrupt();
     return true;
 }
 

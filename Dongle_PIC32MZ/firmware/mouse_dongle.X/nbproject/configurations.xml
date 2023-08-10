@@ -5,41 +5,127 @@
                    displayName="Header Files"
                    projectFiles="true">
       <logicalFolder name="config" displayName="config" projectFiles="true">
-        <logicalFolder name="mouse_dongle"
-                       displayName="mouse_dongle"
-                       projectFiles="true">
+        <logicalFolder name="default" displayName="default" projectFiles="true">
+          <logicalFolder name="driver" displayName="driver" projectFiles="true">
+            <logicalFolder name="usb" displayName="usb" projectFiles="true">
+              <logicalFolder name="usbhs" displayName="usbhs" projectFiles="true">
+                <logicalFolder name="src" displayName="src" projectFiles="true">
+                  <logicalFolder name="templates" displayName="templates" projectFiles="true">
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_Interrupts_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_SoftReset_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_USBIDControl_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_EndpointOperations_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_USBIDControl_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_RxEPStatus_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_ModuleControl_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_ModuleControl_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_ClockResetControl_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_HighSpeedSupport_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_ClockResetControl_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_Interrupts_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_RxEPStatus_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_TxEPStatus_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_SoftReset_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_registers.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_EndpointFIFO_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_HighSpeedSupport_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_EndpointOperations_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_TxEPStatus_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_EP0Status_Unsupported.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_EP0Status_Default.h</itemPath>
+                    <itemPath>../src/config/default/driver/usb/usbhs/src/templates/usbhs_EndpointFIFO_Default.h</itemPath>
+                  </logicalFolder>
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/plib_usbhs.h</itemPath>
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/drv_usbhs_local.h</itemPath>
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/usbhs_registers.h</itemPath>
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/plib_usbhs_header.h</itemPath>
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/drv_usbhs_variant_mapping.h</itemPath>
+                </logicalFolder>
+                <itemPath>../src/config/default/driver/usb/usbhs/drv_usbhs.h</itemPath>
+              </logicalFolder>
+              <itemPath>../src/config/default/driver/usb/drv_usb_external_dependencies.h</itemPath>
+              <itemPath>../src/config/default/driver/usb/drv_usb.h</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/default/driver/driver.h</itemPath>
+            <itemPath>../src/config/default/driver/driver_common.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="osal" displayName="osal" projectFiles="true">
+            <itemPath>../src/config/default/osal/osal_definitions.h</itemPath>
+            <itemPath>../src/config/default/osal/osal.h</itemPath>
+            <itemPath>../src/config/default/osal/osal_impl_basic.h</itemPath>
+          </logicalFolder>
           <logicalFolder name="peripheral" displayName="peripheral" projectFiles="true">
             <logicalFolder name="clk" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/mouse_dongle/peripheral/clk/plib_clk.h</itemPath>
+              <itemPath>../src/config/default/peripheral/clk/plib_clk.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="coretimer" displayName="coretimer" projectFiles="true">
+              <itemPath>../src/config/default/peripheral/coretimer/plib_coretimer.h</itemPath>
             </logicalFolder>
             <logicalFolder name="evic" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/mouse_dongle/peripheral/evic/plib_evic.h</itemPath>
+              <itemPath>../src/config/default/peripheral/evic/plib_evic.h</itemPath>
             </logicalFolder>
             <logicalFolder name="gpio" displayName="gpio" projectFiles="true">
-              <itemPath>../src/config/mouse_dongle/peripheral/gpio/plib_gpio.h</itemPath>
+              <itemPath>../src/config/default/peripheral/gpio/plib_gpio.h</itemPath>
             </logicalFolder>
             <logicalFolder name="spi" displayName="spi" projectFiles="true">
               <logicalFolder name="spi_slave" displayName="spi_slave" projectFiles="true">
-                <itemPath>../src/config/mouse_dongle/peripheral/spi/spi_slave/plib_spi_slave_common.h</itemPath>
-                <itemPath>../src/config/mouse_dongle/peripheral/spi/spi_slave/plib_spi2_slave.h</itemPath>
+                <itemPath>../src/config/default/peripheral/spi/spi_slave/plib_spi_slave_common.h</itemPath>
+                <itemPath>../src/config/default/peripheral/spi/spi_slave/plib_spi2_slave.h</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
-          <itemPath>../src/config/mouse_dongle/device.h</itemPath>
-          <itemPath>../src/config/mouse_dongle/definitions.h</itemPath>
-          <itemPath>../src/config/mouse_dongle/toolchain_specifics.h</itemPath>
-          <itemPath>../src/config/mouse_dongle/interrupts.h</itemPath>
+          <logicalFolder name="system" displayName="system" projectFiles="true">
+            <logicalFolder name="debug" displayName="debug" projectFiles="true">
+              <itemPath>../src/config/default/system/debug/sys_debug.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="int" displayName="int" projectFiles="true">
+              <itemPath>../src/config/default/system/int/sys_int_mapping.h</itemPath>
+              <itemPath>../src/config/default/system/int/sys_int.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="time" displayName="time" projectFiles="true">
+              <itemPath>../src/config/default/system/time/sys_time.h</itemPath>
+              <itemPath>../src/config/default/system/time/sys_time_definitions.h</itemPath>
+              <itemPath>../src/config/default/system/time/src/sys_time_local.h</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/default/system/system_common.h</itemPath>
+            <itemPath>../src/config/default/system/system.h</itemPath>
+            <itemPath>../src/config/default/system/system_module.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="usb" displayName="usb" projectFiles="true">
+            <logicalFolder name="src" displayName="src" projectFiles="true">
+              <itemPath>../src/config/default/usb/src/usb_external_dependencies.h</itemPath>
+              <itemPath>../src/config/default/usb/src/usb_device_local.h</itemPath>
+              <itemPath>../src/config/default/usb/src/usb_device_mapping.h</itemPath>
+              <itemPath>../src/config/default/usb/src/usb_device_function_driver.h</itemPath>
+              <itemPath>../src/config/default/usb/src/usb_device_hid_local.h</itemPath>
+            </logicalFolder>
+            <itemPath>../src/config/default/usb/usb_host_client_driver.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_common.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_chapter_9.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_host_hub_interface.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_hid.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_host.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_device_hid.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_device.h</itemPath>
+            <itemPath>../src/config/default/usb/usb_hub.h</itemPath>
+          </logicalFolder>
+          <itemPath>../src/config/default/toolchain_specifics.h</itemPath>
+          <itemPath>../src/config/default/definitions.h</itemPath>
+          <itemPath>../src/config/default/sys_tasks.h</itemPath>
+          <itemPath>../src/config/default/device.h</itemPath>
+          <itemPath>../src/config/default/configuration.h</itemPath>
+          <itemPath>../src/config/default/interrupts.h</itemPath>
+          <itemPath>../src/config/default/user.h</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/app.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
       <logicalFolder name="config" displayName="config" projectFiles="true">
-        <logicalFolder name="mouse_dongle"
-                       displayName="mouse_dongle"
-                       projectFiles="true">
-          <itemPath>../src/config/mouse_dongle/p32MZ0512EFE064.ld</itemPath>
+        <logicalFolder name="default" displayName="default" projectFiles="true">
+          <itemPath>../src/config/default/p32MZ0512EFE064.ld</itemPath>
         </logicalFolder>
       </logicalFolder>
     </logicalFolder>
@@ -47,33 +133,61 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="config" displayName="config" projectFiles="true">
-        <logicalFolder name="mouse_dongle"
-                       displayName="mouse_dongle"
-                       projectFiles="true">
+        <logicalFolder name="default" displayName="default" projectFiles="true">
+          <logicalFolder name="driver" displayName="driver" projectFiles="true">
+            <logicalFolder name="usb" displayName="usb" projectFiles="true">
+              <logicalFolder name="usbhs" displayName="usbhs" projectFiles="true">
+                <logicalFolder name="src" displayName="src" projectFiles="true">
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/drv_usbhs.c</itemPath>
+                  <itemPath>../src/config/default/driver/usb/usbhs/src/drv_usbhs_device.c</itemPath>
+                </logicalFolder>
+              </logicalFolder>
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="peripheral" displayName="peripheral" projectFiles="true">
             <logicalFolder name="clk" displayName="clk" projectFiles="true">
-              <itemPath>../src/config/mouse_dongle/peripheral/clk/plib_clk.c</itemPath>
+              <itemPath>../src/config/default/peripheral/clk/plib_clk.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="coretimer" displayName="coretimer" projectFiles="true">
+              <itemPath>../src/config/default/peripheral/coretimer/plib_coretimer.c</itemPath>
             </logicalFolder>
             <logicalFolder name="evic" displayName="evic" projectFiles="true">
-              <itemPath>../src/config/mouse_dongle/peripheral/evic/plib_evic.c</itemPath>
+              <itemPath>../src/config/default/peripheral/evic/plib_evic.c</itemPath>
             </logicalFolder>
             <logicalFolder name="gpio" displayName="gpio" projectFiles="true">
-              <itemPath>../src/config/mouse_dongle/peripheral/gpio/plib_gpio.c</itemPath>
+              <itemPath>../src/config/default/peripheral/gpio/plib_gpio.c</itemPath>
             </logicalFolder>
             <logicalFolder name="spi" displayName="spi" projectFiles="true">
               <logicalFolder name="spi_slave" displayName="spi_slave" projectFiles="true">
-                <itemPath>../src/config/mouse_dongle/peripheral/spi/spi_slave/plib_spi2_slave.c</itemPath>
+                <itemPath>../src/config/default/peripheral/spi/spi_slave/plib_spi2_slave.c</itemPath>
               </logicalFolder>
             </logicalFolder>
           </logicalFolder>
           <logicalFolder name="stdio" displayName="stdio" projectFiles="true">
-            <itemPath>../src/config/mouse_dongle/stdio/xc32_monitor.c</itemPath>
+            <itemPath>../src/config/default/stdio/xc32_monitor.c</itemPath>
           </logicalFolder>
-          <itemPath>../src/config/mouse_dongle/interrupts.c</itemPath>
-          <itemPath>../src/config/mouse_dongle/exceptions.c</itemPath>
-          <itemPath>../src/config/mouse_dongle/initialization.c</itemPath>
+          <logicalFolder name="system" displayName="system" projectFiles="true">
+            <logicalFolder name="int" displayName="int" projectFiles="true">
+              <itemPath>../src/config/default/system/int/src/sys_int.c</itemPath>
+            </logicalFolder>
+            <logicalFolder name="time" displayName="time" projectFiles="true">
+              <itemPath>../src/config/default/system/time/src/sys_time.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="usb" displayName="usb" projectFiles="true">
+            <logicalFolder name="src" displayName="src" projectFiles="true">
+              <itemPath>../src/config/default/usb/src/usb_device.c</itemPath>
+              <itemPath>../src/config/default/usb/src/usb_device_hid.c</itemPath>
+            </logicalFolder>
+          </logicalFolder>
+          <itemPath>../src/config/default/exceptions.c</itemPath>
+          <itemPath>../src/config/default/usb_device_init_data.c</itemPath>
+          <itemPath>../src/config/default/tasks.c</itemPath>
+          <itemPath>../src/config/default/initialization.c</itemPath>
+          <itemPath>../src/config/default/interrupts.c</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>../src/app.c</itemPath>
       <itemPath>../src/main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -85,13 +199,13 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
-    <conf name="mouse_dongle" type="2">
+    <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <targetDevice>PIC32MZ0512EFE064</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool></platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>4.30</languageToolchainVersion>
         <platform>3</platform>
@@ -135,8 +249,7 @@
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories"
-                  value="../src;../src/config/mouse_dongle"/>
+        <property key="extra-include-directories" value="../src;../src/config/default"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -235,8 +348,7 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories"
-                  value="../src;../src/config/mouse_dongle"/>
+        <property key="extra-include-directories" value="../src;../src/config/default"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>

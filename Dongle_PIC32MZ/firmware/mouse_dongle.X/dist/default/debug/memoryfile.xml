@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project>                                  
+  <executable name="dist/default/debug/mouse_dongle.X.debug.elf">                 
+    <memory name="program">                 
+      <units>bytes</units>                 
+      <length>525440</length>                 
+      <used>34108</used>                     
+      <free>491332</free>                     
+    </memory>                              
+    <memory name="data">              
+      <units>bytes</units>                 
+      <length>131072</length>                 
+      <used>1760</used>                     
+      <free>129312</free>                     
+    </memory>                              
+  </executable>                            
+</project>                                 
