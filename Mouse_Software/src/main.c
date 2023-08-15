@@ -12,6 +12,8 @@ void main(void) {
     init_mouse();
     LOG_INF("Mouse Initialized");
     k_sleep(K_MSEC(1000));
+    use_wireless(true);
+    update_config();
     for (;;) {
         handle_mouse_transmission();
     }

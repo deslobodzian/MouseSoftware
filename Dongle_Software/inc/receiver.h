@@ -12,7 +12,12 @@
 #include <zephyr/devicetree.h>
 #include <zephyr/kernel.h>
 #include <zephyr/types.h>
+#include "nrf_to_pic32_spi.h"
 
+typedef struct {
+    struct esb_payload rx_payload;
+    bool ready;
+} receiver_data_t;
 
 void event_handler(struct esb_evt const *event);
 
@@ -20,7 +25,5 @@ int clocks_start(void);
 
 int init_esb(void);
 int init_receiver(void);
-
-struct esb_payload get_payload();
 
 #endif // DONGLE_RECEIVER_H

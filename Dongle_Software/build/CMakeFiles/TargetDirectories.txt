@@ -159,6 +159,9 @@ D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/senso
 D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/sensor/nrf5/CMakeFiles/drivers__sensor__nrf5.dir
 D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/sensor/nrf5/CMakeFiles/edit_cache.dir
 D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/sensor/nrf5/CMakeFiles/rebuild_cache.dir
+D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/spi/CMakeFiles/edit_cache.dir
+D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/spi/CMakeFiles/drivers__spi.dir
+D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/spi/CMakeFiles/rebuild_cache.dir
 D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/timer/CMakeFiles/drivers__timer.dir
 D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/timer/CMakeFiles/edit_cache.dir
 D:/Programming/Projects/MouseSoftware/Dongle_Software/build/zephyr/drivers/timer/CMakeFiles/rebuild_cache.dir

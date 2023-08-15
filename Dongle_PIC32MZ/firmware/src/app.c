@@ -90,7 +90,7 @@ void APP_Initialize ( void )
 {
     /* Place the App state machine in its initial state. */
     appData.state = APP_STATE_INIT;
-
+    init_mouse();
 
 
     /* TODO: Initialize your application's state machine and other
@@ -106,7 +106,18 @@ void APP_Initialize ( void )
   Remarks:
     See prototype in app.h.
  */
-
+void delay(uint32_t count)
+{
+    uint32_t i;
+        
+    for (i = 0; i < count; i++)
+    {
+        asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");
+        asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");
+        asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");
+        asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");asm("NOP");        
+    }
+}
 void APP_Tasks ( void )
 {
 
@@ -117,8 +128,9 @@ void APP_Tasks ( void )
         case APP_STATE_INIT:
         {
             bool appInitialized = true;
-
-
+//            enable_usb();
+//            SPI2_CallbackRegister(spi_event_handler, (uintptr_t) 0);
+             
             if (appInitialized)
             {
 
@@ -129,7 +141,8 @@ void APP_Tasks ( void )
 
         case APP_STATE_SERVICE_TASKS:
         {
-
+            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "SPI Event");
+            delay(1000);
             break;
         }
 

@@ -79,7 +79,7 @@ bool configure_pmw3360(void) {
         return false;
     }
 
-    if (!set_cpi(800)) {
+    if (!set_cpi(400)) {
         LOG_ERR("Failed to set CPI");
         return false;
     }

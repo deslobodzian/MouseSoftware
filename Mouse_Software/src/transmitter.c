@@ -119,21 +119,21 @@ int init_transceiver(void) {
     return 0;
 }
 
-int esb_create_message(motion_info_t *motion, wheel_data_t *wheel, uint8_t* button_states) {
+int esb_create_message(const mouse_t *mouse) {
     uint8_t button_bm = 0;
 	for (size_t i = 0; i < 5; i++) {
-        if (button_states[i]) {
+        if (mouse->button_states[i]) {
 		    uint8_t mask = 1 << (i);
 		    button_bm |= mask;
         }
 	}
-    uint8_t x_buf[sizeof(motion->dx)];
-    uint8_t y_buf[sizeof(motion->dy)];
-    sys_put_le16(motion->dx, x_buf);
-    sys_put_le16(motion->dy, y_buf);
+    uint8_t x_buf[sizeof(mouse->motion_info.dx)];
+    uint8_t y_buf[sizeof(mouse->motion_info.dy)];
+    sys_put_le16(mouse->motion_info.dx, x_buf);
+    sys_put_le16(mouse->motion_info.dy, y_buf);
 	esb_data.message.data[0] = 0x01;
     esb_data.message.data[1] = button_bm; //button_bit_mask;
-    esb_data.message.data[2] = wheel->rotation; // wheel;
+    esb_data.message.data[2] = mouse->wheel_data.rotation; // wheel;
     esb_data.message.data[3] = x_buf[0];
     esb_data.message.data[4] = (y_buf[0] << 4) | (x_buf[1] & 0x0f);
     esb_data.message.data[5] = (y_buf[1] << 4) | (y_buf[0] >> 4);
@@ -147,7 +147,6 @@ int write_message() {
         esb_data.ready = false;
         esb_flush_tx();
         err = esb_write_payload(&esb_data.message);
-        
         if (err) {
             LOG_ERR("Failed to write, err: %d", err);
             return -1;
@@ -155,4 +154,8 @@ int write_message() {
         return 0;
     }
     return -1;
+}
+
+bool esb_line_busy(void) {
+    return esb_data.ready;
 }

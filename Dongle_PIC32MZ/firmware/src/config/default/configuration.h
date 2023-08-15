@@ -143,6 +143,9 @@ extern "C" {
 /* EP0 size in bytes */
 #define USB_DEVICE_EP0_BUFFER_SIZE                          64
 
+/* Enable Synch Frame Event */
+#define USB_DEVICE_SYNCH_FRAME_EVENT_ENABLE
+
 
 
 

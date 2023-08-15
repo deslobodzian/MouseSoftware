@@ -100,7 +100,7 @@
 			status = "disabled";
 		};
 		spi0: spi@40003000 {
-			compatible = "nordic,nrf-spis";
+			compatible = "nordic,nrf-spim";
 			#address-cells = < 0x1 >;
 			#size-cells = < 0x0 >;
 			reg = < 0x40003000 0x1000 >;
@@ -108,11 +108,15 @@
 			max-frequency = < 0x7a1200 >;
 			easydma-maxcnt-bits = < 0xf >;
 			status = "okay";
-			cs-gpios = < &gpio0 0x6 0x0 >;
-			def-char = < 0x0 >;
 			pinctrl-0 = < &spi0_default >;
 			pinctrl-1 = < &spi0_sleep >;
 			pinctrl-names = "default", "sleep";
+			cs-gpios = < &gpio0 0x14 0x1 >;
+			pic32mz: pic32mz@0 {
+				compatible = "vnd,spi-device";
+				reg = < 0x0 >;
+				spi-max-frequency = < 0x7a1200 >;
+			};
 		};
 		i2c1: i2c@40004000 {
 			compatible = "nordic,nrf-twim";
@@ -340,7 +344,7 @@
 			#gpio-cells = < 0x2 >;
 			status = "okay";
 			port = < 0x0 >;
-			phandle = < 0x2 >;
+			phandle = < 0x4 >;
 		};
 	};
 	pinctrl: pin-controller {
@@ -361,13 +365,13 @@
 			};
 		};
 		spi0_default: spi0_default {
-			phandle = < 0x3 >;
+			phandle = < 0x2 >;
 			group1 {
 				psels = < 0x40007 >, < 0x6000e >, < 0x5000f >;
 			};
 		};
 		spi0_sleep: spi0_sleep {
-			phandle = < 0x4 >;
+			phandle = < 0x3 >;
 			group1 {
 				psels = < 0x40007 >, < 0x6000e >, < 0x5000f >;
 				low-power-enable;

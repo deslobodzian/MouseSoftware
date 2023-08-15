@@ -1,35 +1,30 @@
 #include "receiver.h"
-
+// #include "nrf_to_pic32_spi.h"
 LOG_MODULE_REGISTER(esb_receiver, CONFIG_LOG_DEFAULT_LEVEL);
 
-static struct esb_payload rx_payload;
+static receiver_data_t rx_data;
 
 void event_handler(struct esb_evt const *event) {
-    switch (event->evt_id) {
-        case ESB_EVENT_TX_SUCCESS:
-            LOG_DBG("TX SUCCESS EVENT");
-            break;
-        case ESB_EVENT_TX_FAILED:
-            LOG_DBG("TX FAILED EVENT");
-            break;
-        case ESB_EVENT_RX_RECEIVED:
-            if (esb_read_rx_payload(&rx_payload) == 0) {
-                LOG_DBG("Packet received, len %d ", rx_payload.length);
-				// "0x%02x, 0x%02x, 0x%02x, 0x%02x, "
-			// 	// "0x%02x, 0x%02x, 0x%02x, 0x%02x",
-			// 	// rx_payload.length, rx_payload.data[0],
-			// 	// rx_payload.data[1], rx_payload.data[2],
-			// 	// rx_payload.data[3], rx_payload.data[4],
-			// 	// rx_payload.data[5], rx_payload.data[6],
-			// 	// rx_payload.data[7]);
-            //     k_sleep(K_MSEC(1));
-            // } else {
-            //     LOG_ERR("Error while reading rx packet");
-            //     k_sleep(K_MSEC(1));
-            }
-            break;
+    if (rx_data.ready) {
+        switch (event->evt_id) {
+            case ESB_EVENT_TX_SUCCESS:
+                LOG_DBG("TX SUCCESS EVENT");
+                break;
+            case ESB_EVENT_TX_FAILED:
+                LOG_DBG("TX FAILED EVENT");
+                break;
+            case ESB_EVENT_RX_RECEIVED:
+                if (esb_read_rx_payload(&rx_data.rx_payload) == 0) {
+                    message_t msg = {
+                        .data = rx_data.rx_payload.data,
+                        .len = rx_data.rx_payload.length,
+                    };
+                     // pic32_spi_write(&msg);
+                    LOG_INF("Wrote SPI Message");
+                }
+                break;
+        }
     }
-
 }
 
 int clocks_start(void) {
@@ -112,7 +107,7 @@ int init_esb(void) {
 
 int init_receiver(void) {
     int err;
-
+    rx_data.ready = false;
     ("Staring Dongle Board Receiver");
     err = clocks_start();
     if (err < 0) {
@@ -132,9 +127,6 @@ int init_receiver(void) {
     }
 
     LOG_INF("Initialization complete");
+    rx_data.ready = true;
     return 0;
-}
-
-struct esb_payload get_payload() {
-    return rx_payload;
 }

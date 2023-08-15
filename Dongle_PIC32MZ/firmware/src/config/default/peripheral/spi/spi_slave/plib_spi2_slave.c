@@ -61,8 +61,8 @@ volatile static uint8_t SPI2_WriteBuffer[SPI2_WRITE_BUFFER_SIZE];
 /* Global object to save SPI Exchange related data */
 volatile static SPI_SLAVE_OBJECT spi2Obj;
 
-#define SPI2_CON_CKP                        (0UL << _SPI2CON_CKP_POSITION)
-#define SPI2_CON_CKE                        (1UL << _SPI2CON_CKE_POSITION)
+#define SPI2_CON_CKP                        (1UL << _SPI2CON_CKP_POSITION)
+#define SPI2_CON_CKE                        (0UL << _SPI2CON_CKE_POSITION)
 #define SPI2_CON_MODE_32_MODE_16            (0UL << _SPI2CON_MODE16_POSITION)
 #define SPI2_CON_ENHBUF                     (1UL << _SPI2CON_ENHBUF_POSITION)
 #define SPI2_CON_STXISEL                    (3UL << _SPI2CON_STXISEL_POSITION)
@@ -115,8 +115,8 @@ void SPI2_Initialize ( void )
     SRXISEL = 1 (Receive buffer is not empty)
     STXISEL = 3 (Transmit buffer is not full)
     MSTEN = 0
-    CKP = 0
-    CKE = 1
+    CKP = 1
+    CKE = 0
     MODE< 32,16 > = 0
     ENHBUF = 1
     */

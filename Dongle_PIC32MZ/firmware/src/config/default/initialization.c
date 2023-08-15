@@ -57,7 +57,7 @@
 /*** DEVCFG0 ***/
 #pragma config DEBUG =      OFF
 #pragma config JTAGEN =     OFF
-#pragma config ICESEL =     ICS_PGx1
+#pragma config ICESEL =     ICS_PGx2
 #pragma config TRCEN =      OFF
 #pragma config BOOTISA =    MIPS32
 #pragma config FECCCON =    OFF_UNLOCKED
@@ -76,7 +76,7 @@
 #pragma config DMTINTV =    WIN_127_128
 #pragma config FSOSCEN =    OFF
 #pragma config IESO =       OFF
-#pragma config POSCMOD =    OFF
+#pragma config POSCMOD =    HS
 #pragma config OSCIOFNC =   OFF
 #pragma config FCKSM =      CSECME
 #pragma config WDTPS =      PS1048576
@@ -93,7 +93,7 @@
 #pragma config FPLLICLK =   PLL_FRC
 #pragma config FPLLMULT =   MUL_50
 #pragma config FPLLODIV =   DIV_2
-#pragma config UPLLFSEL =   FREQ_12MHZ
+#pragma config UPLLFSEL =   FREQ_24MHZ
 
 /*** DEVCFG3 ***/
 #pragma config USERID =     0xffff
@@ -255,7 +255,7 @@ void SYS_Initialize ( void* data )
     sysObj.sysTime = SYS_TIME_Initialize(SYS_TIME_INDEX_0, (SYS_MODULE_INIT *)&sysTimeInitData);
     
     /* MISRAC 2012 deviation block end */
-
+        
 	/* Initialize USB Driver */ 
     sysObj.drvUSBHSObject = DRV_USBHS_Initialize(DRV_USBHS_INDEX_0, (SYS_MODULE_INIT *) &drvUSBInit);	
 

@@ -548,7 +548,7 @@
   };
  };
 
- spi0_default: spi0_default {
+ spi0_default: spi0_default{
   group1 {
    psels = <((((((0) * 32U) + (7)) & 0x7FU) << 0U) | ((4U & 0xFFFFU) << 16U))>,
     <((((((0) * 32U) + (14)) & 0x7FU) << 0U) | ((6U & 0xFFFFU) << 16U))>,
@@ -585,14 +585,17 @@
 };
 
 &spi0 {
- compatible = "nordic,nrf-spis";
+ compatible = "nordic,nrf-spim";
  status = "okay";
- cs-gpios = <&gpio0 6 0>;
- def-char = <0x00>;
-
  pinctrl-0 = <&spi0_default>;
  pinctrl-1 = <&spi0_sleep>;
  pinctrl-names = "default", "sleep";
+ cs-gpios = <&gpio0 20 (1 << 0)>;
+ pic32mz: pic32mz@0 {
+  compatible = "vnd,spi-device";
+  reg = <0>;
+  spi-max-frequency = <8000000>;
+ };
 };
 
 

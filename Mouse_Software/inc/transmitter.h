@@ -13,9 +13,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/types.h>
 #include <zephyr/sys/byteorder.h>
-#include "wheel.h"
-#include "motion_sensor.h"
-
+#include "mouse.h"
 
 typedef struct {
         struct esb_payload received_message;
@@ -36,7 +34,8 @@ int clocks_start(void);
 int init_esb(void);
 int init_transceiver(void);
 
-int esb_create_message(motion_info_t *motion, wheel_data_t *wheel, uint8_t* button_states);
+int esb_create_message(const mouse_t *mouse);
 int write_message();
+bool esb_line_busy(void);
 
 #endif // MOUSE_TRANSMITTER_H

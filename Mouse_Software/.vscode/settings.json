@@ -24,7 +24,9 @@
         "log.h": "c",
         "motion_sensor.h": "c",
         "transmitter.h": "c",
-        "byteorder.h": "c"
+        "byteorder.h": "c",
+        "wheel.h": "c",
+        "nrf_clock_control.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
