@@ -79,7 +79,7 @@ bool configure_pmw3360(void) {
         return false;
     }
 
-    if (!set_cpi(400)) {
+    if (!set_cpi(800)) {
         LOG_ERR("Failed to set CPI");
         return false;
     }
@@ -92,7 +92,7 @@ bool configure_pmw3360(void) {
 
     LOG_INF("CPI is now %u", cpi);
     LOG_INF("Enabling Interrupts");
-    enable_data_interrupt();
+    // enable_data_interrupt();
     return true;
 }
 

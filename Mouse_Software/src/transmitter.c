@@ -6,21 +6,20 @@
          RADIO_SHORTS_DISABLED_RSSISTOP_Msk)                            
 LOG_MODULE_REGISTER(esb_transmitter, CONFIG_LOG_DEFAULT_LEVEL);
 
-static esb_data_t esb_data = INIT_ESB_DATA(0, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08);
+static esb_data_t esb_data = INIT_ESB_DATA(0, 0x01, 0x02, 0x03, 0x04, 0x05);
 
 void event_handler(struct esb_evt const *event) {
     esb_data.ready = true;
-
     switch(event -> evt_id) {
         case ESB_EVENT_TX_SUCCESS:
-            LOG_DBG("TX SUCCESS EVENT");
+            LOG_INF("TX SUCCESS EVENT");
             break;
         case ESB_EVENT_TX_FAILED:
-            LOG_DBG("TX FAILED EVENT");
+            LOG_INF("TX FAILED EVENT");
             break;
         case ESB_EVENT_RX_RECEIVED:
-            while (esb_read_rx_payload(&esb_data.received_message) == 0) {
-                LOG_DBG("Packet received");
+            while (esb_read_rx_payload(&esb_data.received_message) == 1) {
+                LOG_INF("Packet received");
             }
             break;
     }
@@ -43,7 +42,7 @@ int clocks_start(void) {
 
     err = onoff_request(clk_mgr, &clk_cli);
     if (err < 0) {
-        LOG_ERR("Clock request fialed: %d", err);
+        LOG_ERR("Clock request failed: %d", err);
         return err;
     }
 
@@ -69,8 +68,10 @@ int init_esb(void) {
     config.protocol = ESB_PROTOCOL_ESB_DPL;
     config.retransmit_delay = 600; //ms
     config.bitrate = ESB_BITRATE_2MBPS;
+    config.crc = ESB_CRC_8BIT;
     config.event_handler = event_handler;
     config.mode = ESB_MODE_PTX;
+    config.use_fast_ramp_up = true;
     config.selective_auto_ack = true;
 
     err = esb_init(&config);
@@ -97,7 +98,6 @@ int init_esb(void) {
         LOG_ERR("Error setting address prefix");
         return err;
     }   
-    esb_data.ready = true;
 
     return 0;
 }
@@ -115,6 +115,7 @@ int init_transceiver(void) {
         return -1;
     }
     LOG_INF("Initialization complete");
+    esb_data.ready = true;
     esb_data.message.noack = false;
     return 0;
 }
@@ -131,12 +132,11 @@ int esb_create_message(const mouse_t *mouse) {
     uint8_t y_buf[sizeof(mouse->motion_info.dy)];
     sys_put_le16(mouse->motion_info.dx, x_buf);
     sys_put_le16(mouse->motion_info.dy, y_buf);
-	esb_data.message.data[0] = 0x01;
-    esb_data.message.data[1] = button_bm; //button_bit_mask;
-    esb_data.message.data[2] = mouse->wheel_data.rotation; // wheel;
-    esb_data.message.data[3] = x_buf[0];
-    esb_data.message.data[4] = (y_buf[0] << 4) | (x_buf[1] & 0x0f);
-    esb_data.message.data[5] = (y_buf[1] << 4) | (y_buf[0] >> 4);
+    esb_data.message.data[0] = button_bm; //button_bit_mask;
+    esb_data.message.data[1] = mouse->wheel_data.rotation; // wheel;
+    esb_data.message.data[2] = x_buf[0];
+    esb_data.message.data[3] = (y_buf[0] << 4) | (x_buf[1] & 0x0f);
+    esb_data.message.data[4] = (y_buf[1] << 4) | (y_buf[0] >> 4);
     return 0;
 }
 
@@ -157,5 +157,5 @@ int write_message() {
 }
 
 bool esb_line_busy(void) {
-    return esb_data.ready;
+    return !esb_data.ready;
 }

@@ -23,6 +23,6 @@ int init_usb(void);
 
 // Function to write to the HID
 int hid_write(const mouse_t* mouse);
-bool line_busy(void);
+bool usb_line_busy(void);
 
 #endif // MOUSE_USB_H

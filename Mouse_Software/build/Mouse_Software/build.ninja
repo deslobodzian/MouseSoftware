@@ -196,14 +196,6 @@ build CMakeFiles/app.dir/src/mouse.c.obj: C_COMPILER__app_ ../../src/mouse.c || 
   OBJECT_DIR = CMakeFiles\app.dir
   OBJECT_FILE_DIR = CMakeFiles\app.dir\src
 
-build CMakeFiles/app.dir/src/periodic_task.c.obj: C_COMPILER__app_ ../../src/periodic_task.c || cmake_object_order_depends_target_app
-  DEFINES = -DKERNEL -DNRF52820_XXAA -DUSE_PARTITION_MANAGER=0 -D__PROGRAM_START -D__ZEPHYR__=1
-  DEP_FILE = CMakeFiles\app.dir\src\periodic_task.c.obj.d
-  FLAGS = -fno-strict-aliasing -Os -imacros D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software/zephyr/include/generated/autoconf.h -ffreestanding -fno-common -g -gdwarf-4 -fdiagnostics-color=always -mcpu=cortex-m4 -mthumb -mabi=aapcs --sysroot=D:/Programming/CrossCompilers/ncs/toolchains/31f4403e35/opt/zephyr-sdk/arm-zephyr-eabi/arm-zephyr-eabi -imacros D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include/zephyr/toolchain/zephyr_stdint.h -Wall -Wformat -Wformat-security -Wno-format-zero-length -Wno-pointer-sign -Wpointer-arith -Wexpansion-to-defined -Wno-unused-but-set-variable -Werror=implicit-int -fno-pic -fno-pie -fno-asynchronous-unwind-tables -fno-reorder-functions --param=min-pagesize=0 -fno-defer-pop -fmacro-prefix-map=D:/Programming/Projects/MouseSoftware/Mouse_Software=CMAKE_SOURCE_DIR -fmacro-prefix-map=D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr=ZEPHYR_BASE -fmacro-prefix-map=D:/Programming/CrossCompilers/ncs/v2.4.1=WEST_TOPDIR -ffunction-sections -fdata-sections -std=c99 -nostdinc
-  INCLUDES = -I../../inc -ID:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/include -Izephyr/include/generated -ID:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/soc/arm/nordic_nrf/nrf52 -ID:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/soc/arm/nordic_nrf/common/. -ID:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/subsys/usb/device -ID:/Programming/CrossCompilers/ncs/v2.4.1/nrf/include -ID:/Programming/CrossCompilers/ncs/v2.4.1/nrf/lib/multithreading_lock/. -ID:/Programming/CrossCompilers/ncs/v2.4.1/nrf/tests/include -ID:/Programming/CrossCompilers/ncs/v2.4.1/modules/hal/cmsis/CMSIS/Core/Include -ID:/Programming/CrossCompilers/ncs/v2.4.1/modules/hal/nordic/nrfx -ID:/Programming/CrossCompilers/ncs/v2.4.1/modules/hal/nordic/nrfx/drivers/include -ID:/Programming/CrossCompilers/ncs/v2.4.1/modules/hal/nordic/nrfx/mdk -ID:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/modules/hal_nordic/nrfx/. -ID:/Programming/CrossCompilers/ncs/v2.4.1/modules/debug/segger/SEGGER -ID:/Programming/CrossCompilers/ncs/v2.4.1/modules/debug/segger/Config -ID:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/modules/segger/. -ID:/Programming/CrossCompilers/ncs/v2.4.1/nrfxlib/mpsl/include -ID:/Programming/CrossCompilers/ncs/v2.4.1/nrfxlib/mpsl/include/protocol -isystem D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr/lib/libc/minimal/include -isystem d:/programming/crosscompilers/ncs/toolchains/31f4403e35/opt/zephyr-sdk/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/include -isystem d:/programming/crosscompilers/ncs/toolchains/31f4403e35/opt/zephyr-sdk/arm-zephyr-eabi/bin/../lib/gcc/arm-zephyr-eabi/12.2.0/include-fixed
-  OBJECT_DIR = CMakeFiles\app.dir
-  OBJECT_FILE_DIR = CMakeFiles\app.dir\src
-
 build CMakeFiles/app.dir/src/transmitter.c.obj: C_COMPILER__app_ ../../src/transmitter.c || cmake_object_order_depends_target_app
   DEFINES = -DKERNEL -DNRF52820_XXAA -DUSE_PARTITION_MANAGER=0 -D__PROGRAM_START -D__ZEPHYR__=1
   DEP_FILE = CMakeFiles\app.dir\src\transmitter.c.obj.d
@@ -236,7 +228,7 @@ build CMakeFiles/app.dir/src/wheel.c.obj: C_COMPILER__app_ ../../src/wheel.c || 
 #############################################
 # Link the static library app\libapp.a
 
-build app/libapp.a: C_STATIC_LIBRARY_LINKER__app_ CMakeFiles/app.dir/src/buttons.c.obj CMakeFiles/app.dir/src/main.c.obj CMakeFiles/app.dir/src/motion_sensor.c.obj CMakeFiles/app.dir/src/mouse.c.obj CMakeFiles/app.dir/src/periodic_task.c.obj CMakeFiles/app.dir/src/transmitter.c.obj CMakeFiles/app.dir/src/usb.c.obj CMakeFiles/app.dir/src/wheel.c.obj || zephyr/driver_validation_h_target zephyr/kobj_types_h_target zephyr/syscall_list_h_target zephyr/zephyr_generated_headers
+build app/libapp.a: C_STATIC_LIBRARY_LINKER__app_ CMakeFiles/app.dir/src/buttons.c.obj CMakeFiles/app.dir/src/main.c.obj CMakeFiles/app.dir/src/motion_sensor.c.obj CMakeFiles/app.dir/src/mouse.c.obj CMakeFiles/app.dir/src/transmitter.c.obj CMakeFiles/app.dir/src/usb.c.obj CMakeFiles/app.dir/src/wheel.c.obj || zephyr/driver_validation_h_target zephyr/kobj_types_h_target zephyr/syscall_list_h_target zephyr/zephyr_generated_headers
   OBJECT_DIR = CMakeFiles\app.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

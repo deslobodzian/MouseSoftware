@@ -6,7 +6,6 @@ BOARD_DIR:PATH=D:/Programming/Projects/MouseSoftware/Mouse_Software/boards/arm/m
 BOARD_ROOT:STRING=d:/programming/projects/mousesoftware/mouse_software;D:/Programming/CrossCompilers/ncs/v2.4.1/nrf;D:/Programming/CrossCompilers/ncs/v2.4.1/zephyr
 CACHED_BOARD:STRING=mouse_board
 CACHED_SHIELD:STRING=
-CONF_FILE:STRING=d:/Programming/Projects/MouseSoftware/Mouse_Software/prj.conf
 FIND_PACKAGE_MESSAGE_DETAILS_Python3:INTERNAL=[D:/Programming/CrossCompilers/ncs/toolchains/31f4403e35/opt/bin/python.exe][cfound components: Interpreter ][v3.8.2(3.8)]
 Mouse_Software_CONFIG_BOOTLOADER_MCUBOOT:STRING=n
 NCS_TOOLCHAIN_VERSION:STRING=NONE

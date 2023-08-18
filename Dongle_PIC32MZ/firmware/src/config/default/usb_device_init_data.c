@@ -46,88 +46,6 @@
 
 #include "configuration.h"
 #include "definitions.h"
-
-// Mouse report size
-#define REPORT_SIZE                     6 /* 1 byte id + 5 bytes data*/ 
-
-// Usage pages
-#define USAGE_PAGE_MOUSE_XY             0x01
-#define USAGE_PAGE_MOUSE_WHEEL          0x01
-#define USAGE_PAGE_MOUSE_BUTTONS        0x09
-
-// Mouse report ID
-#define MOUSE_REPORT_ID             0x01
-
-#define HID_DEVICE_ID               "HID_0"
-#define NUM_MOUSE_BUTTONS           5
-#define NUM_AXIS                    3 /* X, Y, Mouse Wheel */
-#define NUM_ITEMS                   5
-
-#define MOUSE_REPORT_WHEEL_MAX      (0x7F)
-#define MOUSE_REPORT_WHEEL_MIN      (-0x7F)
-
-// Mouse axis X and Y max and min values
-#define MOUSE_REPORT_XY_MAX         (0x07FF)
-#define MOUSE_REPORT_XY_MIN         (-0x07FF)
-
-#define MOUSE_REPORT_BUTTONS_NUM_MAX    8
-
-enum {
-    MOUSE_AXIS_X,
-    MOUSE_AXIS_Y,
-    MOUSE_AXIS_WHEEL,
-    MOUSE_AXIS_NUM,
-};
-
-// HID report map for a mouse
-// For usage pages: https://www.usb.org/sites/default/files/documents/hut1_12v2.pdf
-#define REPORT_MAP                                              \
-    /* Mouse Report */                                          \
-    0x09, 0x01, /* Usage (pointer) */                           \
-    0xA1, 0x00, /* Collection (physical)*/                      \
-                                                                \
-    0x85, MOUSE_REPORT_ID, /* Report ID */                      \
-                                                                \
-    /* Button Inputs */                                         \
-    0x05, USAGE_PAGE_MOUSE_BUTTONS,                             \
-    0x19, 0x01,       /* Usage Minimum (1) */                   \
-    0x29, 0x08,       /* Usage Maximum (8) */                   \
-    0x15, 0x00,       /* Logical Minimum (0) */                 \
-    0x25, 0x01,       /* Logical Maximum (1) */                 \
-    0x75, 0x01,       /* Report Size (1) */                     \
-    0x95, MOUSE_REPORT_BUTTONS_NUM_MAX, /* Report Count */      \
-    0x81, 0x02,       /* Input (data, variable, absolute) */    \
-                                                                \
-    /* Wheel Inputs */                                          \
-    0x05, USAGE_PAGE_MOUSE_WHEEL,                               \
-    0x09, 0x38,       /* Usage (Wheel) */                       \
-    0x15, 0x81,       /* Logical Minimum (-127) */              \
-    0x25, 0x7F,       /* Logical Maximum (127) */               \
-    0x75, 0x08,       /* Report Size (8) */                     \
-    0x95, 0x01,       /* Report Count */                        \
-    0x81, 0x06,       /* Input (data, variable, relative) */    \
-                                                                \
-    /* XY Position Inputs */                                    \
-    0x05, USAGE_PAGE_MOUSE_XY,                                  \
-    0x09, 0x30,       /* Usage (X) */                           \
-    0x09, 0x31,       /* Usage (Y) */                           \
-    0x16, 0x01, 0xF8,  /* Logical Maximum (2047) */             \
-    0x26, 0xFF, 0x07,  /* Logical Minimum (-2047) */            \
-    0x75, 0x0C,       /* Report Size (12) */                    \
-    0x95, 0x02,       /* Report Count (2) */                    \
-    0x81, 0x06,       /* Input (data, variable, relative) */    \
-                                                                \
-    0xC0              /* End Collection (Physical) */
-
-
-// HID report descriptor for a mouse
-static const uint8_t hid_rpt01[] = {
-    0x05, 0x01, /* Usage Page (Generic Desktop) */ 
-    0x09, 0x02, /* Usage (Mouse) */
-    0xA1, 0x01, /* Collection (Application)*/
-    REPORT_MAP,
-    0xC0,
-};
 /**************************************************
  * USB Device Function Driver Init Data
  **************************************************/
@@ -136,31 +54,40 @@ static const uint8_t hid_rpt01[] = {
  ****************************************************/
 const uint8_t hid_rpt0[] =
 {
-	0x05, 0x01, /* Usage Page (Generic Desktop)        */
-    0x09, 0x02, /* Usage (Mouse)                       */
-    0xA1, 0x01, /* Collection (Application)            */
-    0x09, 0x01, /* Usage (Pointer)                     */
-    0xA1, 0x00, /* Collection (Physical)               */
-    0x05, 0x09, /* Usage Page (Buttons)                */
-    0x19, 0x01, /* Usage Minimum (01)                  */
-    0x29, 0x08, /* Usage Maximum (08)                  */
-    0x15, 0x00, /* Logical Minimum (0)                 */
-    0x25, 0x01, /* Logical Maximum (1)                 */
-    0x95, 0x08, /* Report Count (8)                    */
-    0x75, 0x01, /* Report Size (1)                     */
-    0x81, 0x02, /* Input (Data, Variable, Absolute)    */
-    0x95, 0x01, /* Report Count (1)                    */
-    0x75, 0x05, /* Report Size (5)                     */
-    0x81, 0x01, /* Input (Constant)    ;5 bit padding  */
-    0x05, 0x01, /* Usage Page (Generic Desktop)        */
-    0x09, 0x30, /* Usage (X)                           */
-    0x09, 0x31, /* Usage (Y)                           */
-    0x15, 0x81, /* Logical Minimum (-127)              */
-    0x25, 0x7F, /* Logical Maximum (127)               */
-    0x75, 0x08, /* Report Size (8)                     */
-    0x95, 0x02, /* Report Count (2)                    */
-    0x81, 0x06, /* Input (Data, Variable, Relative)    */
-    0xC0, 0xC0
+    0x05, 0x01,             // Usage Page (Generic Desktop)
+    0x09, 0x02,             // Usage (Mouse)
+    0xA1, 0x01,             // Collection (Application)
+    
+    // Mouse Buttons (8 bits * 1 count)
+    0x05, 0x09,             // Usage Page (Buttons)
+    0x19, 0x01,             // Usage Minimum (1)
+    0x29, 0x08,             // Usage Maximum (8)
+    0x15, 0x00,             // Logical Minimum (0)
+    0x25, 0x01,             // Logical Maximum (1)
+    0x75, 0x01,             // Report Size (1)
+    0x95, 0x08,             // Report Count (8)
+    0x81, 0x02,             // Input (Data, Variable, Absolute)
+    
+    // Mouse Wheel (8 bits * 1 count)
+    0x05, 0x01,             // Usage Page (Generic Desktop)
+    0x09, 0x38,             // Usage (Wheel)
+    0x15, 0x81,             // Logical Minimum (-127)
+    0x25, 0x7F,             // Logical Maximum (127)
+    0x75, 0x08,             // Report Size (8)
+    0x95, 0x01,             // Report Count (1)
+    0x81, 0x06,             // Input (Data, Variable, Relative)
+    
+    // Mouse XY Position (12 bits * 2 count)
+    0x05, 0x01,             // Usage Page (Generic Desktop)
+    0x09, 0x30,             // Usage (X)
+    0x09, 0x31,             // Usage (Y)
+    0x16, 0x01, 0xF8,       // Logical Maximum (2047)
+    0x26, 0xFF, 0x07,       // Logical Minimum (-2047)
+    0x75, 0x0C,             // Report Size (12)
+    0x95, 0x02,             // Report Count (2)
+    0x81, 0x06,             // Input (Data, Variable, Relative)
+    
+    0xC0                    // End Collection
 };
 
 /**************************************************
@@ -168,8 +95,8 @@ const uint8_t hid_rpt0[] =
  **************************************************/
 const USB_DEVICE_HID_INIT hidInit0 =
 {
-	 .hidReportDescriptorSize = sizeof(hid_rpt01),
-	 .hidReportDescriptor = (void *)&hid_rpt01,
+	 .hidReportDescriptorSize = sizeof(hid_rpt0),
+	 .hidReportDescriptor = (void *)&hid_rpt0,
 	 .queueSizeReportReceive = 1,
 	 .queueSizeReportSend = 1
 };
@@ -213,7 +140,7 @@ const USB_DEVICE_DESCRIPTOR deviceDescriptor =
     0x02,                                                   // Subclass code
     0x01,                                                   // Protocol code
     USB_DEVICE_EP0_BUFFER_SIZE,                             // Max packet size for EP0, see configuration.h
-    0x04D8,                                                 // Vendor ID
+    0x6176,                                                 // Vendor ID
     0x1205,                                                 // Product ID
     0x0100,                                                 // Device release number in BCD format
     0x01,                                                   // Manufacturer string index
@@ -248,8 +175,8 @@ const uint8_t highSpeedConfigurationDescriptor[]=
 
     0x09,                                               // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                       // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(107),                  //(107 Bytes)Size of the Configuration descriptor
-    3,                                                  // Number of interfaces in this configuration
+    USB_DEVICE_16bitTo8bitArrange(41),                  //(41 Bytes)Size of the Configuration descriptor
+    1,                                                  // Number of interfaces in this configuration
     0x01,                                               // Index value of this configuration
     0x00,                                               // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
@@ -319,8 +246,8 @@ const uint8_t fullSpeedConfigurationDescriptor[]=
 
     0x09,                                                   // Size of this descriptor in bytes
     USB_DESCRIPTOR_CONFIGURATION,                           // Descriptor Type
-    USB_DEVICE_16bitTo8bitArrange(107),                      //(107 Bytes)Size of the Configuration descriptor
-    3,                                                      // Number of interfaces in this configuration
+    USB_DEVICE_16bitTo8bitArrange(41),                      //(41 Bytes)Size of the Configuration descriptor
+    1,                                                      // Number of interfaces in this configuration
     0x01,                                                   // Index value of this configuration
     0x00,                                                   // Configuration string index
     USB_ATTRIBUTE_DEFAULT | USB_ATTRIBUTE_SELF_POWERED, // Attributes
@@ -407,14 +334,14 @@ const struct
 {
     uint8_t bLength;                                    // Size of this descriptor in bytes
     uint8_t bDscType;                                   // STRING descriptor type
-    uint16_t string[25];                                // String
+    uint16_t string[4];                                // String
 }
 
 sd001 =
 {
     sizeof(sd001),
     USB_DESCRIPTOR_STRING,
-    {'M','i','c','r','o','c','h','i','p',' ','T','e','c','h','n','o','l','o','g','y',' ','I','n','c','.'}
+    {'X','a','v','.'}
 };
 
 /*******************************************
@@ -424,14 +351,14 @@ const struct
 {
     uint8_t bLength;                                    // Size of this descriptor in bytes
     uint8_t bDscType;                                   // STRING descriptor type
-    uint16_t string[25];                                // String
+    uint16_t string[11];                                // String
 }
 
 sd002 =
 {
     sizeof(sd002),
     USB_DESCRIPTOR_STRING,
-    {'E','n','t','e','r',' ','P','r','o','d','u','c','t',' ','s','t','r','i','n','g',' ','h','e','r','e'}
+    {'B','a','l','d','r',' ','M','o','u','s','e'}
 };
 
 /***************************************

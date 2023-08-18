@@ -72,6 +72,6 @@ int hid_write(const mouse_t* mouse) {
     return err;
 }
 
-bool line_busy(void) {
+bool usb_line_busy(void) {
     return transmission_busy;
 }

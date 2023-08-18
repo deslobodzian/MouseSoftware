@@ -5,15 +5,12 @@
 
 LOG_MODULE_REGISTER(main, CONFIG_LOG_DEFAULT_LEVEL);
 
-mouse_t mouse;
-
 void main(void) {
     LOG_INF("Starting mouse");
     init_mouse();
     LOG_INF("Mouse Initialized");
+    set_wireless(true);
     k_sleep(K_MSEC(1000));
-    use_wireless(true);
-    update_config();
     for (;;) {
         handle_mouse_transmission();
     }

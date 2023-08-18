@@ -19,11 +19,13 @@ typedef struct {
     bool ready;
 } receiver_data_t;
 
+
 void event_handler(struct esb_evt const *event);
 
 int clocks_start(void);
 
 int init_esb(void);
 int init_receiver(void);
+void send_confirmation_to_transmitter(void);
 
 #endif // DONGLE_RECEIVER_H

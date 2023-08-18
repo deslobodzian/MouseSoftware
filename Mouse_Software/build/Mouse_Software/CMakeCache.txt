@@ -39,7 +39,7 @@ CACHED_BOARD:STRING=mouse_board
 // listed, e.g. CONF_FILE="prj1.conf;prj2.conf" The CACHED_CONF_FILE
 // is internal Zephyr variable used between CMake runs. To change
 // CONF_FILE, use the CONF_FILE variable.
-CACHED_CONF_FILE:STRING=d:/Programming/Projects/MouseSoftware/Mouse_Software/prj.conf
+CACHED_CONF_FILE:STRING=D:/Programming/Projects/MouseSoftware/Mouse_Software/prj.conf
 
 //Selected shield
 CACHED_SHIELD:STRING=

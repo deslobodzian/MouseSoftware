@@ -1,17 +1,16 @@
 #include "mouse.h"
 #include "usb.h"
-#include "transmitter.h"
 #include <zephyr/logging/log.h>
+#include "transmitter.h"
 
 LOG_MODULE_REGISTER(mouse, CONFIG_LOG_DEFAULT_LEVEL);
 
 K_FIFO_DEFINE(mouse_fifo);
 
 static mouse_t mouse_data;
-static mouse_config_t config;
+static mouse_config_t mouse_cfg;
 
 int init_mouse() {
-    config.cpi = 400;
     while (!is_pmw3360_ready()) {
         LOG_DBG("PMW3360 not ready");
         k_sleep(K_MSEC(1));
@@ -39,23 +38,18 @@ int init_mouse() {
         k_sleep(K_MSEC(1));
     }
     LOG_INF("USB is ready");
-
     while (init_transceiver() != 0) {
-        LOG_DBG("Configuring transceiver is not ready");
+        LOG_DBG("Configuring ESB is not ready");
         k_sleep(K_MSEC(1));
     }
-    LOG_INF("Transceiver is ready");
+    LOG_INF("ESB is ready");
+
     k_fifo_init(&mouse_fifo);
     return 0;
 }
 
-void update_config(void) {
-    set_cpi(config.cpi);
-    use_wireless(config.is_wireless);
-}
-
-void use_wireless(bool use_wireless) {
-    config.is_wireless = use_wireless;
+void set_wireless(bool wireless) {
+    mouse_cfg.is_wireless = wireless;
 }
 
 void update_mouse(mouse_t* mouse) {
@@ -63,7 +57,6 @@ void update_mouse(mouse_t* mouse) {
     mouse->motion_info = read_motion();
     fetch_buttons(&(mouse->button_states));
 }
-
 void handle_mouse_transmission(void) {
     static message_t messages[2];
     static int current_message_index = 0;
@@ -82,18 +75,16 @@ void handle_mouse_transmission(void) {
         k_fifo_put(&mouse_fifo, &messages[current_message_index]);
         current_message_index = (current_message_index + 1) % 2;
     }
-
-    if (!k_fifo_is_empty(&mouse_fifo)) {
+    bool line_busy = mouse_cfg.is_wireless ? esb_line_busy() : usb_line_busy();
+    if (!line_busy && !k_fifo_is_empty(&mouse_fifo)) {
         message_t *message_to_send = k_fifo_get(&mouse_fifo, K_NO_WAIT);
-        if (config.is_wireless) {
-            if (!esb_line_busy()) {}
-                esb_create_message(&message_to_send->data);
-                write_message();
-            }
+        if (mouse_cfg.is_wireless) {
+            LOG_INF("Sending ESB");
+            esb_create_message(&message_to_send->data);
+            write_message();
         } else {
-            if (!line_busy()) {
-                hid_write(&message_to_send->data);
-            }
+            LOG_INF("Sending USB");
+            hid_write(&message_to_send->data);
         }
     }
 }

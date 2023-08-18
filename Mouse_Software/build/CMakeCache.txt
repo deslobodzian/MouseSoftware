@@ -69,9 +69,6 @@ CMAKE_SKIP_RPATH:BOOL=NO
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
-//No help, variable specified on the command line.
-CONF_FILE:STRING=d:/Programming/Projects/MouseSoftware/Mouse_Software/prj.conf
-
 //MCUBOOT is disabled as bootloader
 Mouse_Software_CONFIG_BOOTLOADER_MCUBOOT:STRING=n
 

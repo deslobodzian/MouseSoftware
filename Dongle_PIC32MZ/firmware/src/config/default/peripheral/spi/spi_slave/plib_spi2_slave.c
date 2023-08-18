@@ -47,7 +47,6 @@
 // Section: SPI2 Slave Implementation
 // *****************************************************************************
 // *****************************************************************************
-#define SPI2_BUSY_PIN                    GPIO_PIN_RG9
 #define SPI2_CS_PIN                      GPIO_PIN_RG9
 
 
@@ -135,8 +134,6 @@ void SPI2_Initialize ( void )
     spi2Obj.csInterruptPending = false;
     spi2Obj.rxInterruptActive = false;
 
-    /* Set the Busy Pin to ready state */
-    GPIO_PinWrite((GPIO_PIN)SPI2_BUSY_PIN, 0);
 
     /* Register callback and enable notifications on Chip Select logic level change */
     (void)GPIO_PinInterruptCallbackRegister(SPI2_CS_PIN, SPI2_CS_Handler, 0U);
@@ -229,11 +226,6 @@ bool SPI2_IsBusy(void)
     return spi2Obj.transferIsBusy;
 }
 
-/* Drive the GPIO pin to indicate to SPI Master that the slave is ready now */
-void SPI2_Ready(void)
-{
-    GPIO_PinWrite((GPIO_PIN)SPI2_BUSY_PIN, 0);
-}
 
 SPI_SLAVE_ERROR SPI2_ErrorGet(void)
 {
@@ -246,15 +238,13 @@ SPI_SLAVE_ERROR SPI2_ErrorGet(void)
 
 static void __attribute__((used)) SPI2_CS_Handler(GPIO_PIN pin, uintptr_t context)
 {
-    bool activeState = true;
+    bool activeState = false;
 
     if (GPIO_PinRead((GPIO_PIN)SPI2_CS_PIN) == activeState)
     {
         /* CS is asserted */
         spi2Obj.transferIsBusy = true;
 
-        /* Drive busy line to active state */
-        GPIO_PinWrite((GPIO_PIN)SPI2_BUSY_PIN, 1);
     }
     else
     {

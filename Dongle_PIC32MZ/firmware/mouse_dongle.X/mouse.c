@@ -1,10 +1,11 @@
 #include "../mouse_dongle.X/mouse.h"
 #include <stdio.h>
 #include <string.h>
-#include "system/debug/sys_debug.h"
+//#include "system/debug/sys_debug.h"
 static spi_data_t spi_data;
 static mouse_data_t mouse_data;
-
+static mouse_report_t mouse_report USB_ALIGN;
+static mouse_spi_data mouse_spi;
 void usb_device_hid_event_handler(
     USB_DEVICE_HID_INDEX hid_instance,
     USB_DEVICE_HID_EVENT event,
@@ -84,16 +85,31 @@ void usb_device_event_handler(USB_DEVICE_EVENT event, void * event_data, uintptr
 void spi_event_handler(uintptr_t context) {
     if (SPI2_ErrorGet() == SPI_SLAVE_ERROR_NONE) {
 //        SPI2_Write(data, 6);
-        SPI2_Read(spi_data.rx_data, SPI_BUFFER_SIZE);
-//        if (mouse_data.is_configured && !mouse_data.is_mouse_report_send_busy) {
-//            // Send the SPI data as a HID report
-//            USB_DEVICE_HID_ReportSend(
-//                    mouse_data.hid_instance,
-//                    &mouse_data.report_transfer_handle,
-//                    spi_data.rx_data,
-//                    SPI_BUFFER_SIZE
-//            );
+        SPI2_Read(spi_data.rx_data, SPI2_ReadCountGet());
+//        if (spi_data.rx_data[3] != 0x0) {
+//            printf("temp");
 //        }
+        unpack_spi_message(spi_data.rx_data, &mouse_spi);
+//        if (mouse_spi.motion.dx != 0 || mouse_spi.motion.dy != 0) {
+//            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Button Bitmask: 0x%02X\n", mouse_spi.button_bm);
+//            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Wheel Rotation: %d\n", mouse_spi.wheel.rotation);
+//            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "X Motion: %d\n", mouse_spi.motion.dx);
+//            SYS_DEBUG_PRINT(SYS_ERROR_INFO, "Y Motion: %d\n", mouse_spi.motion.dy);
+//        }
+
+//        memcpy(tmp, spi_data.rx_data, 6);
+        if (mouse_data.is_configured && !mouse_data.is_mouse_report_send_busy) {
+//            mouse_data.is_mouse_report_send_busy = true;
+//            create_mouse_report(spi_data.rx_data, &mouse_report);
+            create_mouse_report_new(&mouse_spi, &mouse_report);
+
+            USB_DEVICE_HID_ReportSend(
+                    mouse_data.hid_instance,
+                    &mouse_data.report_transfer_handle,
+                    (uint8_t*)&mouse_report,
+                    sizeof(mouse_report_t)
+            );
+        }
     }
 }
 
@@ -103,13 +119,80 @@ void init_mouse(void){
     mouse_data.hid_instance = 0;
     mouse_data.is_mouse_report_send_busy = false;
 }
-void enable_usb(void){
+int enable_usb(void){
     mouse_data.device_handle = USB_DEVICE_Open(USB_DEVICE_INDEX_0, DRV_IO_INTENT_READWRITE);
     if (mouse_data.device_handle != USB_DEVICE_HANDLE_INVALID) {
         USB_DEVICE_EventHandlerSet(mouse_data.device_handle, usb_device_event_handler, 0);
+        return 0;
+    } else {
+        printf("Error Failed to start mouse");
+        return -1;
     }
+    return 0;
 }
 
 void create_mouse_report(uint8_t *spi_rx_data, mouse_report_t *mouse_report) {
-    
+    if (spi_rx_data == NULL || mouse_report == NULL) {
+        return;
+    }
+    memcpy(mouse_report->data, spi_rx_data, SPI_BUFFER_SIZE);
+}
+void create_mouse_report_new(mouse_spi_data *mouse_spi, mouse_report_t *hid_report) {
+    // Button bitmask (8 bits)
+    hid_report->data[0] = mouse_spi->button_bm;
+
+    // Wheel rotation (8 bits, signed)
+    hid_report->data[1] = mouse_spi->wheel.rotation;
+
+    // X motion (12 bits, signed)
+    hid_report->data[2] = mouse_spi->motion.dx & 0xFF;
+    hid_report->data[3] = (mouse_spi->motion.dx >> 8) & 0x0F;
+
+    // Y motion (12 bits, signed)
+    hid_report->data[3] |= (mouse_spi->motion.dy & 0x0F) << 4;
+    hid_report->data[4] = (mouse_spi->motion.dy >> 4) & 0xFF;
+}
+
+void unpack_spi_message(uint8_t *msg, mouse_spi_data *mouse_spi) {
+    mouse_spi->button_bm = msg[0];
+
+    mouse_spi->wheel.rotation = (int8_t)msg[1]; // Interpret as signed 8-bit value
+
+    int16_t x = (msg[2] & 0xFF) | ((msg[3] & 0x0F) << 8);
+    int16_t y = ((msg[3] & 0xF0) >> 4) | ((msg[4] & 0xFF) << 4);
+
+    // If the most significant bit is set, the value is negative
+    if (x & 0x0800) x |= 0xF000;
+    if (y & 0x0800) y |= 0xF000;
+    mouse_spi->motion.dx = x;
+    mouse_spi->motion.dy = y;
+}
+
+void create_dummy_mouse_report(mouse_report_t *mouse_report) {
+    if (mouse_report == NULL) {
+        return;
+    }
+    mouse_report->data[0] = 0x00;
+    mouse_report->data[1] = 0x10;
+    mouse_report->data[2] = 0x00; // Least significant byte
+    mouse_report->data[3] = 0x00; // Least significant byte
+    mouse_report->data[4] = 0x00; // Least significant byte
+}
+void test_mouse(void) {
+    if (mouse_data.is_configured && !mouse_data.is_mouse_report_send_busy) {
+            mouse_data.is_mouse_report_send_busy = true;
+            create_dummy_mouse_report(&mouse_report);
+
+//            create_mouse_report(spi_data.rx_data, &mouse_report);
+            // Send the SPI data as a HID report
+            uint8_t result = USB_DEVICE_HID_ReportSend(
+                    mouse_data.hid_instance,
+                    &mouse_data.report_transfer_handle,
+                    (uint8_t*)&mouse_report,
+                    sizeof(mouse_report_t)
+            );
+            if (result != USB_DEVICE_HID_RESULT_OK) {
+                printf("Failed");
+            }
+        }
 }

@@ -14,13 +14,27 @@ void event_handler(struct esb_evt const *event) {
                 LOG_DBG("TX FAILED EVENT");
                 break;
             case ESB_EVENT_RX_RECEIVED:
+                LOG_INF("RX_EVENT");
                 if (esb_read_rx_payload(&rx_data.rx_payload) == 0) {
+                    uint8_t *data = rx_data.rx_payload.data;
+
+                    uint8_t button_bm = data[0];
+                    int8_t wheel = (int8_t)data[1];
+                    int16_t dx = ((data[2] & 0xFF) | ((data[3] & 0x0F) << 8));
+                    int16_t dy = ((data[3] & 0xF0) >> 4) | ((data[4] & 0xF0) << 4) | ((data[4] & 0x0F) << 12);
+
+                    LOG_INF("Button Bit Map: %02X", button_bm);
+                    LOG_INF("Wheel: %d", wheel);
+                    LOG_INF("dx: %d", dx);
+                    LOG_INF("dy: %d", dy);
                     message_t msg = {
-                        .data = rx_data.rx_payload.data,
+                        .data = &(rx_data.rx_payload.data),
                         .len = rx_data.rx_payload.length,
                     };
-                     // pic32_spi_write(&msg);
-                    LOG_INF("Wrote SPI Message");
+                    add_message_to_fifo(&msg);
+                    // LOG_INF("SENDING SPI");
+                    // pic32_spi_write(&msg);
+                    // LOG_INF("SENT SPI");
                 }
                 break;
         }
@@ -73,7 +87,10 @@ int init_esb(void) {
     config.protocol = ESB_PROTOCOL_ESB_DPL;
     config.bitrate = ESB_BITRATE_2MBPS;
     config.mode = ESB_MODE_PRX;
+    config.crc = ESB_CRC_8BIT;
+    // config.payload_length = 6;
     config.event_handler = event_handler;
+    config.use_fast_ramp_up = true;
     config.selective_auto_ack = true;
 
     err = esb_init(&config);

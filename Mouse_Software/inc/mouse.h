@@ -23,7 +23,7 @@ typedef struct {
 
 int init_mouse();
 void update_config(void);
-void use_wireless(bool use_wireless);
+void set_wireless(bool wireless);
 void update_mouse(mouse_t* mouse);
 void send_hid_message(void);
 

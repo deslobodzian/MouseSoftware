@@ -8,6 +8,7 @@
         "${workspaceFolder}"
     ],
     "files.associations": {
-        "nrf_to_pic32_spi.h": "c"
+        "nrf_to_pic32_spi.h": "c",
+        "gpio.h": "c"
     }
 }

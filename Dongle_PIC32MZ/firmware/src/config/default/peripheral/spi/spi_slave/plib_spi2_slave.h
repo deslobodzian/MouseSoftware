@@ -64,7 +64,6 @@ size_t SPI2_WriteBufferSizeGet(void);
 void SPI2_CallbackRegister(SPI_SLAVE_CALLBACK callBack, uintptr_t context );
 SPI_SLAVE_ERROR SPI2_ErrorGet(void);
 bool SPI2_IsBusy(void);
-void SPI2_Ready(void);
 
 /* Provide C++ Compatibility */
 #ifdef __cplusplus

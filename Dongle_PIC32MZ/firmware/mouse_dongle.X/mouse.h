@@ -9,7 +9,8 @@
 
 
 #define NUM_MOUSE_BUTTONS 5
-#define SPI_BUFFER_SIZE   6
+#define SPI_BUFFER_SIZE   5
+
 typedef int16_t mouse_coordinate_t;
 
 typedef enum {
@@ -27,10 +28,15 @@ typedef struct {
 } wheel_data_t;
 
 typedef struct {
-    motion_data_t motion_data;
-    wheel_data_t wheel_data;
-    uint8_t button_states[5]; 
+    uint8_t data[5];
 } mouse_report_t;
+
+typedef struct {
+    uint8_t button_bm;
+    wheel_data_t wheel;
+    motion_data_t motion;
+}mouse_spi_data;
+
 typedef struct {
     USB_DEVICE_HANDLE device_handle;
     SYS_MODULE_INDEX hid_instance;
@@ -48,10 +54,15 @@ typedef struct {
     uint8_t tx_data[SPI_BUFFER_SIZE];
 } spi_data_t;
 
+
 void init_mouse(void);
 void spi_event_handler(uintptr_t context);
 void create_mouse_report(uint8_t *spi_rx_data, mouse_report_t *mouse_report);
+void create_mouse_report_new(mouse_spi_data *mouse_spi, mouse_report_t *mouse_report);
+
+void unpack_spi_message(uint8_t *msg, mouse_spi_data *mouse_spi);
 void init_mouse(void);
-void enable_usb(void);
+int enable_usb(void);
+void test_mouse(void);
 #endif /* _MOUSE_H */
 
