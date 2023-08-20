@@ -21,9 +21,7 @@ wheel_data_t fetch_wheel_data() {
     err = sensor_channel_get(qdec_dev, SENSOR_CHAN_ROTATION, &value);
 
     int16_t wheel = value.val1;
-    #ifdef WHEEL_DEBUG
     LOG_DBG("Wheel rot: %i", wheel);
-    #endif
     wheel_data_t data;
     /* Negative as thats what USB expects */
     data.rotation = -wheel;

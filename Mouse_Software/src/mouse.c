@@ -79,11 +79,9 @@ void handle_mouse_transmission(void) {
     if (!line_busy && !k_fifo_is_empty(&mouse_fifo)) {
         message_t *message_to_send = k_fifo_get(&mouse_fifo, K_NO_WAIT);
         if (mouse_cfg.is_wireless) {
-            LOG_INF("Sending ESB");
             esb_create_message(&message_to_send->data);
             write_message();
         } else {
-            LOG_INF("Sending USB");
             hid_write(&message_to_send->data);
         }
     }

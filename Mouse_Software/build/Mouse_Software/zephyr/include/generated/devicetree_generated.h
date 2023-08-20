@@ -9322,7 +9322,7 @@
 #define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_reg_FOREACH_PROP_ELEM_VARGS(fn, ...) fn(DT_N_S_soc_S_spi_40003000_S_pmw3360_0, reg, 0, __VA_ARGS__)
 #define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_reg_FOREACH_PROP_ELEM_SEP_VARGS(fn, sep, ...) fn(DT_N_S_soc_S_spi_40003000_S_pmw3360_0, reg, 0, __VA_ARGS__)
 #define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_reg_EXISTS 1
-#define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_spi_max_frequency 2000000
+#define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_spi_max_frequency 32000000
 #define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_spi_max_frequency_EXISTS 1
 #define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_duplex 0
 #define DT_N_S_soc_S_spi_40003000_S_pmw3360_0_P_duplex_ENUM_IDX 0

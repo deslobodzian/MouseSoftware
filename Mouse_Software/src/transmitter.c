@@ -12,14 +12,11 @@ void event_handler(struct esb_evt const *event) {
     esb_data.ready = true;
     switch(event -> evt_id) {
         case ESB_EVENT_TX_SUCCESS:
-            LOG_INF("TX SUCCESS EVENT");
             break;
         case ESB_EVENT_TX_FAILED:
-            LOG_INF("TX FAILED EVENT");
             break;
         case ESB_EVENT_RX_RECEIVED:
             while (esb_read_rx_payload(&esb_data.received_message) == 1) {
-                LOG_INF("Packet received");
             }
             break;
     }

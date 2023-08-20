@@ -9,16 +9,6 @@ K_MUTEX_DEFINE(motion_mutex);
 
 static motion_info_t motion_data;
 
-uint32_t get_timestamp(void)
-{
-    return k_cycle_get_32();
-}
-
-uint32_t calculate_elapsed_time(uint32_t start_time, uint32_t end_time)
-{
-    return k_cyc_to_ns_floor64(end_time - start_time);
-}
-
 bool is_pmw3360_ready(void) {
     return device_is_ready(device);
 }
@@ -98,8 +88,6 @@ bool configure_pmw3360(void) {
 
 motion_info_t read_motion(void) {
     struct sensor_value dx, dy;
-    uint32_t start_time = get_timestamp();
-
     int err = sensor_sample_fetch(device);
 
     if (err) {
@@ -109,13 +97,6 @@ motion_info_t read_motion(void) {
 
     sensor_channel_get(device, SENSOR_CHAN_POS_DX, &dx);
     sensor_channel_get(device, SENSOR_CHAN_POS_DY, &dy);
-
-    uint32_t end_time = get_timestamp();
-
-    uint32_t elapsed_time = calculate_elapsed_time(start_time, end_time);
-
-    // Print or handle the elapsed time as needed
-    // LOG_DBG("Function execution time: %u ns\n", elapsed_time);
 
     // dy is negative due to sensor
     motion_info_t info;
