@@ -20,7 +20,13 @@
 #define M4_NODE DT_ALIAS(m4)
 #define M5_NODE DT_ALIAS(m5)
 
-
+#define SPI_INSTANCE                        0
+#define SPI_NODE                            DT_NODELABEL(spi0)
+#define SPI_FREQUENCY                       SPI_FREQUENCY_FREQUENCY_M2
+#define SPI_SCK                             7
+#define SPI_MISO                            14
+#define SPI_MOSI                            15
+// #define PMW3360_IRQ_NODE                    DT_ALIAS(irq)
 // static const uint8_t hid_report_desc[] = HID_MOUSE_REPORT_DESC(5);
 
 #endif // MOUSE_HW_INFO_H

@@ -7,10 +7,15 @@ LOG_MODULE_REGISTER(mouse, CONFIG_LOG_DEFAULT_LEVEL);
 
 K_FIFO_DEFINE(mouse_fifo);
 
-static mouse_t mouse_data;
+// static mouse_t mouse_data;
 static mouse_config_t mouse_cfg;
 
 int init_mouse() {
+    while (!init_pmw3360_sensor()) {
+        LOG_DBG("PMW3360 sensor not ready");
+        k_sleep(K_MSEC(1));
+    }
+    LOG_INF("PMW3360 sensor is ready");
     while (!is_pmw3360_ready()) {
         LOG_DBG("PMW3360 not ready");
         k_sleep(K_MSEC(1));
@@ -55,8 +60,9 @@ void set_wireless(bool wireless) {
 void update_mouse(mouse_t* mouse) {
     mouse->wheel_data = fetch_wheel_data();
     mouse->motion_info = read_motion();
-    fetch_buttons(&(mouse->button_states));
+    fetch_buttons(mouse->button_states);
 }
+
 void handle_mouse_transmission(void) {
     static message_t messages[2];
     static int current_message_index = 0;

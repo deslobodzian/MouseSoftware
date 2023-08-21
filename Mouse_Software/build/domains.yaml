@@ -1,5 +1,0 @@
-default: Mouse_Software
-build_dir: D:/Programming/Projects/MouseSoftware/Mouse_Software/build
-domains:
-  - name: Mouse_Software
-    build_dir: D:/Programming/Projects/MouseSoftware/Mouse_Software/build/Mouse_Software

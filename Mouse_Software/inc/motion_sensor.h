@@ -3,21 +3,17 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
-#include <zephyr/drivers/sensor.h>
-#include <sensor/pmw3360.h>
+#include "pmw3360.h"
+// #include <zephyr/drivers/sensor.h>
+// #include <sensor/pmw3360.h>
 
 typedef struct {
     int16_t dx;
     int16_t dy;
 } motion_info_t;
 
-void enable_data_interrupt(void);
-
-void disable_data_interrupt(void);
-
-void interrupt_handler(const struct device *dev, const struct sensor_trigger *trig);
-
-bool is_pmw3360_ready(void);
+int init_pmw3360_sensor(void);
+bool is_motion_sensor_ready(void);
 
 bool configure_pmw3360(void);
 

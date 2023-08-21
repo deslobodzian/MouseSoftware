@@ -9,7 +9,6 @@ project(baldr_mouse)
 FILE(GLOB APP_SOURCE src/*.c)
 
 target_include_directories(app PRIVATE inc/)
-
 target_sources(app PRIVATE
     ${APP_SOURCE}
 )

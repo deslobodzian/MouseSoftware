@@ -26,6 +26,6 @@ void update_config(void);
 void set_wireless(bool wireless);
 void update_mouse(mouse_t* mouse);
 void send_hid_message(void);
-
+void handle_mouse_transmission(void);
 
 #endif
