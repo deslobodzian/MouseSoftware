@@ -22,7 +22,7 @@
 
 #define SPI_INSTANCE                        0
 #define SPI_NODE                            DT_NODELABEL(spi0)
-#define SPI_FREQUENCY                       SPI_FREQUENCY_FREQUENCY_M2
+#define SPI_FREQUENCY                       SPI_FREQUENCY_FREQUENCY_M8
 #define SPI_SCK                             7
 #define SPI_MISO                            14
 #define SPI_MOSI                            15

@@ -16,6 +16,8 @@ static pmw3360_config_t cfg;
 static const nrfx_spim_t spim_instance = NRFX_SPIM_INSTANCE(SPI_INSTANCE);
 static const struct gpio_dt_spec irq_gpio = GPIO_SPEC(PMW3360_IRQ_NODE);
 
+static const struct gpio_dt_spec cs_gpio = GPIO_DT_SPEC_GET(SPI_NODE, cs_gpios);
+
 static const int32_t async_init_delay[ASYNC_INIT_STEP_COUNT] = {
 	[ASYNC_INIT_STEP_POWER_UP]         = 1,
 	[ASYNC_INIT_STEP_FW_LOAD_START]    = 50,
@@ -42,38 +44,40 @@ static nrfx_spim_config_t spim_config = NRFX_SPIM_DEFAULT_CONFIG(
 	SPI_SCK,
 	SPI_MOSI,
 	SPI_MISO,
-	NRF_DT_GPIOS_TO_PSEL(SPI_NODE, cs_gpios)
+    NRF_SPIM_PIN_NOT_CONNECTED
 );
 
 static int spi_cs_ctrl(bool enable) {
-    uint32_t cs_pin = spim_config.ss_pin;
+	int err;
 
-    if (!enable) {
-        k_busy_wait(T_NCS_SCLK);
-        nrf_gpio_pin_clear(cs_pin); 
-    }
+	if (!enable) {
+		k_busy_wait(T_NCS_SCLK);
+	}
 
-    if (enable) {
-        nrf_gpio_pin_set(cs_pin); 
-        k_busy_wait(T_NCS_SCLK);
-    }
+	err = gpio_pin_set_dt(&cs_gpio, (int)enable);
+	if (err) {
+		LOG_ERR("SPI CS ctrl failed");
+	}
 
-    return 0;
+	if (enable) {
+		k_busy_wait(T_NCS_SCLK);
+	}
+
+	return err;
 }
 
 static int reg_read(uint8_t reg, uint8_t *buf) {
     nrfx_err_t err;
-    uint8_t tx_data = reg & ~SPI_WRITE_BIT; // Ensure write bit is clear
-    uint8_t rx_data;
+    __ASSERT_NO_MSG((reg & SPI_WRITE_BIT) == 0);
 
     err = spi_cs_ctrl(true);
     if (err) {
         return err;
     }
 
-    nrfx_spim_xfer_desc_t xfer_desc = NRFX_SPIM_XFER_TRX(&tx_data, 1, &rx_data, 1);
+    nrfx_spim_xfer_desc_t xfer_desc_tx = NRFX_SPIM_XFER_TX(&reg, 1);
 
-    err = nrfx_spim_xfer(&spim_instance, &xfer_desc, 0);
+    err = nrfx_spim_xfer(&spim_instance, &xfer_desc_tx, 0);
     if (err != NRFX_SUCCESS) {
         LOG_ERR("Reg read failed on SPI write");
         return err;
@@ -81,8 +85,13 @@ static int reg_read(uint8_t reg, uint8_t *buf) {
 
     k_busy_wait(T_SRAD);
 
+    nrfx_spim_xfer_desc_t xfer_desc_rx = NRFX_SPIM_XFER_RX(buf, 1);
     // Read the received data
-    *buf = rx_data;
+    err = nrfx_spim_xfer(&spim_instance, &xfer_desc_rx, 0);
+    if (err != NRFX_SUCCESS) {
+        LOG_ERR("Reg read failed on SPI read");
+        return err;
+    }
 
     err = spi_cs_ctrl(false);
     if (err) {
@@ -155,7 +164,6 @@ static int motion_burst_read(uint8_t *buf, size_t burst_size) {
     err = nrfx_spim_xfer(&spim_instance, &xfer_desc_tx, 0);
     if (err != NRFX_SUCCESS) {
         LOG_ERR("Motion burst failed on SPI write");
-        spi_cs_ctrl(false); 
         return err;
     }
 
@@ -166,7 +174,6 @@ static int motion_burst_read(uint8_t *buf, size_t burst_size) {
     err = nrfx_spim_xfer(&spim_instance, &xfer_desc_rx, 0);
     if (err != NRFX_SUCCESS) {
         LOG_ERR("Motion burst failed on SPI read");
-        spi_cs_ctrl(false);
         return err;
     }
 
@@ -176,7 +183,7 @@ static int motion_burst_read(uint8_t *buf, size_t burst_size) {
     }
 
     k_busy_wait(T_BEXIT);
-
+    data.last_read_burst = true;
     return 0;
 }
 
@@ -186,12 +193,12 @@ static int burst_write(uint8_t reg, const uint8_t *buf, size_t size) {
 
     write_buf = reg | SPI_WRITE_BIT;
 
+    nrfx_spim_xfer_desc_t xfer_desc_tx = NRFX_SPIM_XFER_TX(&write_buf, 1);
+
     err = spi_cs_ctrl(true); 
     if (err) {
         return err;
     }
-
-    nrfx_spim_xfer_desc_t xfer_desc_tx = NRFX_SPIM_XFER_TX(&write_buf, 1);
 
     err = nrfx_spim_xfer(&spim_instance, &xfer_desc_tx, 0);
     if (err != NRFX_SUCCESS) {
@@ -207,7 +214,7 @@ static int burst_write(uint8_t reg, const uint8_t *buf, size_t size) {
         err = nrfx_spim_xfer(&spim_instance, &xfer_desc_tx, 0);
         if (err != NRFX_SUCCESS) {
             LOG_ERR("Burst write failed on SPI write (data)");
-            spi_cs_ctrl(false); 
+            // spi_cs_ctrl(false); 
             return err;
         }
 
@@ -663,6 +670,7 @@ int pmw3360_init(void) {
 	int err;
 
     nrfx_err_t spi_err;
+    spim_config.ss_active_high = false;
     spim_config.frequency = SPI_FREQUENCY;
     spim_config.mode = NRF_SPIM_MODE_3;
     spim_config.bit_order = NRF_SPIM_BIT_ORDER_MSB_FIRST;
@@ -673,27 +681,36 @@ int pmw3360_init(void) {
         return -1;
     }
     // config data
+    if (!device_is_ready(cs_gpio.port)) {
+		LOG_ERR("SPI CS device not ready");
+		return -ENODEV;
+	}
 
+	err = gpio_pin_configure_dt(&cs_gpio, GPIO_OUTPUT_INACTIVE);
+	if (err) {
+		LOG_ERR("Cannot configure SPI CS GPIO");
+		return err;
+	}
     data.last_read_burst = false;
-    err = pmw3360_async_init_power_up();
-    k_sleep(K_USEC(1));
-    pmw3360_async_init_fw_load_start();
-    k_sleep(K_USEC(50));
-    pmw3360_async_init_fw_load_continue();
-    k_sleep(K_USEC(10));
-    pmw3360_async_init_fw_load_verify();
-    k_sleep(K_USEC(1));
-    pmw3360_async_init_configure();
-	// k_work_init(&data.trigger_handler_work, trigger_handler);
-    data.ready = true;
+    // err = pmw3360_async_init_power_up();
+    // k_sleep(K_USEC(1));
+    // pmw3360_async_init_fw_load_start();
+    // k_sleep(K_USEC(50));
+    // pmw3360_async_init_fw_load_continue();
+    // k_sleep(K_USEC(10));
+    // pmw3360_async_init_fw_load_verify();
+    // k_sleep(K_USEC(1));
+    // pmw3360_async_init_configure();
+	// // k_work_init(&data.trigger_handler_work, trigger_handler);
+    // data.ready = true;
 
     // data.ready = true;
-	// k_work_init_delayable(&data.init_work, pmw3360_async_init);
+	k_work_init_delayable(&data.init_work, pmw3360_async_init);
 
-	// k_work_schedule(
-    //     &data.init_work,
-	// 	K_MSEC(async_init_delay[data.async_init_step])
-    // );
+	k_work_schedule(
+        &data.init_work,
+		K_MSEC(async_init_delay[data.async_init_step])
+    );
 
 	return err;
 }
